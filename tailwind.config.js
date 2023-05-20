@@ -1,11 +1,24 @@
+const colors = require('tailwindcss/colors')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./src/**/*.vue"],
   theme: {
-    extend: {},
+    fontSize: {
+      sm: '0.8rem',
+      base: '1rem',
+      xl: '1.25rem',
+      '2xl': '1.563rem',
+      '3xl': '1.953rem',
+      '4xl': '2.441rem',
+      '5xl': '3.052rem',
+    },
+    extend: {
+      colors: {
+        primary: colors.slate['900'],
+        secondary: colors.violet['800'],
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),
