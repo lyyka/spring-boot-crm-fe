@@ -4,7 +4,7 @@ import Github from "@/components/icons/Github.vue"
 <template>
     <header>
         <nav class="px-5 py-3 bg-primary flex justify-between items-center">
-            <p class="text-white">CRM</p>
+            <RouterLink :to="{ name: 'home' }" class="text-white">CRM</RouterLink>
             <a class="flex items-center text-white" target="_blank" href="https://github.com/lyyka">
                 <Github class="mr-2" />
                 Github

@@ -18,6 +18,12 @@ module.exports = {
         primary: colors.slate['900'],
         secondary: colors.violet['800'],
       },
+
+      fontSize: {
+        h1: '3.052rem',
+        h2: '2.441rem',
+        h3: '1.953rem',
+      }
     },
   },
   plugins: [
