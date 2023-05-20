@@ -1,4 +1,5 @@
 import LoginResponse from "../auth/responses/LoginResponse"
+import PipelineStoreResponse from "../pipelines/responses/PipelineStoreResponse"
 import ApiRoute from "./ApiRoute"
 
 /**
@@ -7,6 +8,10 @@ import ApiRoute from "./ApiRoute"
 
 export default {
     auth: {
-        login: () => (new ApiRoute("/api/auth/login", "post", new LoginResponse))
+        login: () => (new ApiRoute("/api/auth/login", "post", new LoginResponse)).noAuth()
+    },
+
+    pipelines: {
+        store: () => (new ApiRoute("/api/pipelines", "post", new PipelineStoreResponse))
     }
 }

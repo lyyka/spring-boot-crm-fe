@@ -1,6 +1,6 @@
-import type ApiRequst from "@/api/router/ApiRequest";
+import type ApiRequest from "@/api/router/ApiRequest";
 
-export default class LoginRequest implements ApiRequst {
+export default class LoginRequest implements ApiRequest {
     private email: string;
     private password: string;
 

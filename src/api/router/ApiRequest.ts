@@ -3,6 +3,6 @@
  * 
  * Each api request should be able to provide data it sends.
  */
-export default interface ApiRequst {
+export default interface ApiRequest {
     getData(): Object;
 }
