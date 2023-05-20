@@ -8,8 +8,7 @@ export default class Auth {
         (new Network)
             .setData(new LoginRequest(email, password))
             .handle(
-                routes.auth.login,
-                new LoginResponse,
+                routes.auth.login(),
                 (data: LoginResponse) => {
                     console.log(data.getToken())
                 }

@@ -1,3 +1,4 @@
+import LoginResponse from "../auth/responses/LoginResponse"
 import ApiRoute from "./ApiRoute"
 
 /**
@@ -6,6 +7,6 @@ import ApiRoute from "./ApiRoute"
 
 export default {
     auth: {
-        login: (new ApiRoute("/api/auth/login", "post"))
+        login: () => (new ApiRoute("/api/auth/login", "post", new LoginResponse))
     }
 }

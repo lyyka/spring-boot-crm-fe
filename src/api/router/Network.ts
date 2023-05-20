@@ -15,14 +15,15 @@ export default class Network {
         return this;
     }
 
-    public handle(route: ApiRoute, mapResponseTo: ApiResponse, callback: CallableFunction): void {
+    public handle(route: ApiRoute, callback: CallableFunction): void {
         axios({
-            method: route.geteMethod(),
+            method: route.getMethod(),
             url: route.render(),
             data: this.data,
         }).then(response => {
-            mapResponseTo.setData(response.data);
-            callback(mapResponseTo)
+            const res = route.getExpectedResponse();
+            res.setData(response.data);
+            callback(res);
         })
     }
 }
