@@ -2,7 +2,6 @@
 import Auth from '@/api/auth/auth';
 import { RouterLink, useRouter } from 'vue-router';
 import Button from '../ui/Button.vue';
-import 'vue-toast-notification/dist/theme-sugar.css';
 defineProps<{
     title: string
 }>()
