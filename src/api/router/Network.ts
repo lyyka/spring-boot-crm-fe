@@ -34,7 +34,7 @@ export default class Network {
             try {
                 const response = await axios(request);
                 const data = route.getExpectedResponse();
-                data.setData(response.data);
+                data.setData(response);
                 resolve(data);
             } catch (error) {
                 reject(error);

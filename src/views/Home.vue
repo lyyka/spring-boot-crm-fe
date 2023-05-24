@@ -9,6 +9,6 @@ import Button from '@/components/ui/Button.vue';
     <div class="bg-gradient-to-b from-primary from-80% to-secondary to-100% h-screen p-5 flex flex-col items-center">
         <h1 class="text-white text-h1">CRM software example</h1>
         <p class="text-slate-300">This app is designed as an example application showcasing a CRM</p>
-        <Button color="secondary" text="Log in now" :route="{ name: 'auth.login' }" class="mt-10" />
+        <Button text="Log in now" :route="{ name: 'auth.login' }" class="mt-10" />
     </div>
 </template>

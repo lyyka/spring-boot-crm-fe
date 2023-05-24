@@ -4,7 +4,7 @@ import Input from '@/components/ui/Input.vue';
 import Button from '@/components/ui/Button.vue';
 import { defineComponent, reactive } from 'vue'
 import Auth from '@/api/auth/auth';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     components: { PublicNavbar, Input, Button },

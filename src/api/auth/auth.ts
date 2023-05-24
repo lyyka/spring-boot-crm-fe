@@ -5,20 +5,24 @@ import LoginRequest from "./requests/LoginRequest";
 
 export default class Auth {
     public async login(email: string, password: string): Promise<boolean> {
-        const data = await (new Network)
-            .setData(new LoginRequest(email, password))
-            .handle(routes.auth.login());
+        try {
+            const data = await (new Network)
+                .setData(new LoginRequest(email, password))
+                .handle(routes.auth.login());
 
-        const cast = data as LoginResponse;
+            const cast = data as LoginResponse;
 
-        const token = cast.getToken();
+            const token = cast.getToken();
 
-        if (token) {
-            localStorage.setItem('access_token', token)
-            return Promise.resolve(true);
+            if (token) {
+                localStorage.setItem('access_token', token)
+                return Promise.resolve(true);
+            }
+
+            return Promise.resolve(false);
+        } catch (e) {
+            return Promise.reject(e);
         }
-
-        return Promise.resolve(false);
     }
 
     public logout(): void {

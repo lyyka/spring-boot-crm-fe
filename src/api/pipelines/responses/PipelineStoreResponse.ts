@@ -3,7 +3,7 @@ import type ApiResponse from "@/api/router/ApiResponse";
 export default class PipelineStoreResponse implements ApiResponse {
     private data: Object = {};
 
-    setData(data: Object): void {
+    setData(data: any): void {
         this.data = data;
     }
 }

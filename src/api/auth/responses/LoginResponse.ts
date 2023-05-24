@@ -7,7 +7,7 @@ export default class LoginResponse implements ApiResponse {
         return this.response?.token;
     }
 
-    public setData(data: { token: string }): void {
-        this.response = data;
+    public setData(data: any): void {
+        this.response = data.data;
     }
 }

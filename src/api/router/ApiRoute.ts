@@ -10,11 +10,17 @@ export default class ApiRoute {
     private expectedResponse: ApiResponse;
     private base = 'http://localhost:8080';
     private auth = true;
+    private params: { [key: string]: number | string } = {}
 
     constructor(route: string, method: string, expectedResponse: ApiResponse) {
         this.route = route;
         this.method = method;
         this.expectedResponse = expectedResponse;
+    }
+
+    public param(key: string, value: number | string): ApiRoute {
+        this.params[key] = value;
+        return this;
     }
 
     public noAuth(): ApiRoute {
@@ -35,6 +41,10 @@ export default class ApiRoute {
     }
 
     public render(): string {
-        return `${this.base}${this.route}`;
+        let routeClean = this.route;
+        Object.keys(this.params).forEach(k => {
+            routeClean = routeClean.replace(`{${k}}`, this.params[k].toString())
+        });
+        return `${this.base}${routeClean}`;
     }
 }
