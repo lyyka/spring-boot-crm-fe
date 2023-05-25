@@ -4,7 +4,7 @@ interface IRole {
 }
 
 export default class Role {
-    private data: IRole;
+    public data: IRole;
 
     constructor(data: any) {
         this.data = data;

@@ -49,23 +49,28 @@ onMounted(async () => {
         </div>
         <Table>
             <TableHead>
-                <TableHeadCell>Email</TableHeadCell>
+                <TableHeadCell>User</TableHeadCell>
                 <TableHeadCell>Role</TableHeadCell>
+                <TableHeadCell>Account enabled</TableHeadCell>
                 <TableHeadCell></TableHeadCell>
             </TableHead>
             <TableBody>
                 <TableRow v-for="user in state.users" :key="user.getId()">
                     <TableCell>
-                        <!-- <RouterLink class="hover:text-secondary" -->
-                        <!-- :to="{ name: 'crm.users.show', params: { id: user.getId() } }"> -->
-                        {{ user.getEmail() }}
-                        <!-- </RouterLink> -->
+                        <RouterLink class="hover:text-secondary"
+                            :to="{ name: 'crm.users.show', params: { id: user.getId() } }">
+                            {{ user.getFullName() + " (" + user.getEmail() + ")" }}
+                        </RouterLink>
                     </TableCell>
 
                     <TableCell>
                         <Tag type="primary">
                             {{ user.getRoleName() }}
                         </Tag>
+                    </TableCell>
+
+                    <TableCell>
+                        {{ user.getEnabled() ? 'Yes' : 'No' }}
                     </TableCell>
 
                     <TableCell>

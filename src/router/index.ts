@@ -48,6 +48,12 @@ const router = createRouter({
       component: () => import('@/views/UsersCreate.vue')
     },
     {
+      path: '/crm/users/:id',
+      name: 'crm.users.show',
+      beforeEnter: authMiddleware,
+      component: () => import('@/views/UsersShow.vue')
+    },
+    {
       path: '/crm/pipelines',
       name: 'crm.pipelines.index',
       beforeEnter: authMiddleware,

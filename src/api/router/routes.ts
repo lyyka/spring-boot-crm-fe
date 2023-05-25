@@ -7,6 +7,7 @@ import StageIndexResponse from "@/api/stages/responses/StageIndexResponse"
 import StageGetResponse from "@/api/stages/responses/StageGetResponse"
 import UserIndexResponse from "@/api/users/responses/UserIndexResponse"
 import RoleIndexResponse from "../roles/responses/RoleIndexResponse"
+import UserGetResponse from "../users/responses/UserGetResponse"
 
 /**
  * This file defines back-end API routes to be used by the Network object
@@ -38,7 +39,9 @@ export default {
 
     users: {
         index: () => (new ApiRoute("/api/users", "get", new UserIndexResponse)),
+        get: (id: number) => (new ApiRoute("/api/users/{id}", "get", new UserGetResponse).param("id", id)),
         store: () => (new ApiRoute("/api/users", "post", new GenericResponse)),
+        update: (id: number) => (new ApiRoute("/api/users/{id}", "put", new GenericResponse)).param('id', id),
         delete: (id: number) => (new ApiRoute("/api/users/{id}", "delete", new GenericResponse)).param('id', id),
     }
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DashboardLayout from '@/components/layouts/DashboardLayout.vue';
 import Input from '@/components/ui/Input.vue';
+import Checkbox from '@/components/ui/Checkbox.vue';
 import Select from '@/components/ui/Select.vue';
 import Button from '@/components/ui/Button.vue';
 import { onMounted, reactive } from 'vue';
@@ -27,7 +28,6 @@ onMounted(async () => {
 });
 
 const createHandle = async () => {
-    console.log(state.request)
     if (state.request.isValid()) {
         (new Users).store(state.request)
             .then(r => toaster.success("Created!"))
@@ -45,6 +45,7 @@ const createHandle = async () => {
             <Select v-model="state.request.roleId" label="Role" :options="state.roles.map((role): any => {
                 return { value: role.getId(), label: role.getName() }
             })"></Select>
+            <Checkbox v-model="state.request.enabled" label="Enabled" />
             <Button text="Create" :disabled="!state.request.isValid()" @click="createHandle" />
         </form>
     </DashboardLayout>
