@@ -44,8 +44,11 @@ const logoutHandle = () => {
     <div class="grid grid-cols-5 grid-rows-1 h-full">
         <div class="col-span-1 border-r border-slate-200 px-4 py-4">
             <p class="text-primary font-bold">CRM</p>
-            <RouterLink :to="{ name: 'crm.dashboard' }" class="text-slate-600 hover:text-slate-700">
+            <RouterLink :to="{ name: 'crm.dashboard' }" class="block text-slate-600 hover:text-slate-700">
                 Dashboard
+            </RouterLink>
+            <RouterLink :to="{ name: 'crm.clients.index' }" class="block text-slate-600 hover:text-slate-700">
+                Clients
             </RouterLink>
             <div class="h-1 border-b border-slate-200 my-4"></div>
             <p class="text-primary font-bold">Settings</p>

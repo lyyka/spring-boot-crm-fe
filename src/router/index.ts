@@ -76,6 +76,24 @@ const router = createRouter({
       name: 'crm.stages.show',
       beforeEnter: authMiddleware,
       component: () => import('@/views/StagesShow.vue')
+    },
+    {
+      path: '/crm/clients',
+      name: 'crm.clients.index',
+      beforeEnter: authMiddleware,
+      component: () => import('@/views/ClientsIndex.vue')
+    },
+    {
+      path: '/crm/clients/create',
+      name: 'crm.clients.create',
+      beforeEnter: authMiddleware,
+      component: () => import('@/views/ClientsCreate.vue')
+    },
+    {
+      path: '/crm/clients/:id',
+      name: 'crm.clients.show',
+      beforeEnter: authMiddleware,
+      component: () => import('@/views/ClientsShow.vue')
     }
   ]
 })
