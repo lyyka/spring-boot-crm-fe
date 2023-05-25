@@ -1,6 +1,6 @@
 import routes from "@/api/router/routes";
 import LoginResponse from "./responses/LoginResponse";
-import Network from "../router/Network";
+import Network from "@/api/router/Network";
 import LoginRequest from "./requests/LoginRequest";
 
 export default class Auth {

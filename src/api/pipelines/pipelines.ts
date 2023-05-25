@@ -1,10 +1,8 @@
-import Network from "../router/Network";
-import routes from "../router/routes";
+import Network from "@/api/router/Network";
+import routes from "@/api/router/routes";
 import PipelineStoreRequest from "./requests/PipelineStoreRequest";
-import type PipelineStoreResponse from "./responses/PipelineStoreResponse";
 import type PipelineIndexResponse from "./responses/PipelineIndexResponse";
-import type GenericResponse from "../router/GenericResponse";
-import type Pipeline from "./dto/Pipeline";
+import type GenericResponse from "@/api/router/GenericResponse";
 import type PipelineGetResponse from "./responses/PipelineGetResponse";
 
 export default class Pipelines {
@@ -20,25 +18,25 @@ export default class Pipelines {
         return cast;
     }
 
-    public async store(name: string): Promise<PipelineStoreResponse> {
+    public async store(name: string): Promise<GenericResponse> {
         const data = await (new Network)
             .setData(
                 new PipelineStoreRequest(name)
             )
             .handle(routes.pipelines.store());
 
-        const cast = data as PipelineStoreResponse;
+        const cast = data as GenericResponse;
         return Promise.resolve(cast);
     }
 
-    public async update(id: number, name: string): Promise<PipelineStoreResponse> {
+    public async update(id: number, name: string): Promise<GenericResponse> {
         const data = await (new Network)
             .setData(
                 new PipelineStoreRequest(name)
             )
             .handle(routes.pipelines.update(id));
 
-        const cast = data as PipelineStoreResponse;
+        const cast = data as GenericResponse;
         return Promise.resolve(cast);
     }
 

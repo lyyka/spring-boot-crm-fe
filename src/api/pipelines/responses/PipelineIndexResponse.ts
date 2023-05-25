@@ -1,7 +1,7 @@
 import type ApiResponse from "@/api/router/ApiResponse";
-import Pipeline from "../dto/Pipeline";
+import Pipeline from "@/api/pipelines/dto/Pipeline";
 
-export default class PipelineStoreResponse implements ApiResponse {
+export default class PipelineIndexResponse implements ApiResponse {
     private data: Pipeline[] = [];
 
     public getData(): Pipeline[] {

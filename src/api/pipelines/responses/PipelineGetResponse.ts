@@ -1,5 +1,5 @@
 import type ApiResponse from "@/api/router/ApiResponse";
-import Pipeline from "../dto/Pipeline";
+import Pipeline from "@/api/pipelines/dto/Pipeline";
 
 export default class PipelineGetResponse implements ApiResponse {
     private data: Pipeline | null = null;

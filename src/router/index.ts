@@ -21,37 +21,43 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/Home.vue')
+      component: () => import('@/views/Home.vue')
     },
     {
       path: '/auth/login',
       name: 'auth.login',
       beforeEnter: guestMiddleware,
-      component: () => import('../views/Login.vue')
+      component: () => import('@/views/Login.vue')
     },
     {
       path: '/crm/dashboard',
       name: 'crm.dashboard',
       beforeEnter: authMiddleware,
-      component: () => import('../views/Dashboard.vue')
+      component: () => import('@/views/Dashboard.vue')
     },
     {
       path: '/crm/pipelines',
       name: 'crm.pipelines.index',
       beforeEnter: authMiddleware,
-      component: () => import('../views/PipelinesIndex.vue')
+      component: () => import('@/views/PipelinesIndex.vue')
     },
     {
       path: '/crm/pipelines/create',
       name: 'crm.pipelines.create',
       beforeEnter: authMiddleware,
-      component: () => import('../views/PipelinesCreate.vue')
+      component: () => import('@/views/PipelinesCreate.vue')
     },
     {
       path: '/crm/pipelines/:id',
       name: 'crm.pipelines.show',
       beforeEnter: authMiddleware,
-      component: () => import('../views/PipelinesShow.vue')
+      component: () => import('@/views/PipelinesShow.vue')
+    },
+    {
+      path: '/crm/stages/:id',
+      name: 'crm.stages.show',
+      beforeEnter: authMiddleware,
+      component: () => import('@/views/StagesShow.vue')
     }
   ]
 })
