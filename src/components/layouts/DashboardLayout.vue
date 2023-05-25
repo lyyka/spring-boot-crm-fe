@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import Auth from '@/api/auth/auth';
 import { RouterLink, useRouter, type RouteRecordRaw } from 'vue-router';
-import Button from '../ui/Button.vue';
+import Button from '@/components/ui/Button.vue';
+import SidebarLink from '@/components/ui/SidebarLink.vue';
 
 export interface CrumbRoute {
     name: string, params?: any
@@ -44,20 +45,20 @@ const logoutHandle = () => {
     <div class="grid grid-cols-5 grid-rows-1 h-full">
         <div class="col-span-1 border-r border-slate-200 px-4 py-4">
             <p class="text-primary font-bold">CRM</p>
-            <RouterLink :to="{ name: 'crm.dashboard' }" class="block text-slate-600 hover:text-slate-700">
+            <SidebarLink :route="{ name: 'crm.dashboard' }">
                 Dashboard
-            </RouterLink>
-            <RouterLink :to="{ name: 'crm.clients.index' }" class="block text-slate-600 hover:text-slate-700">
+            </SidebarLink>
+            <SidebarLink :route="{ name: 'crm.clients.index' }">
                 Clients
-            </RouterLink>
+            </SidebarLink>
             <div class="h-1 border-b border-slate-200 my-4"></div>
             <p class="text-primary font-bold">Settings</p>
-            <RouterLink :to="{ name: 'crm.pipelines.index' }" class="block text-slate-600 hover:text-slate-700">
+            <SidebarLink :route="{ name: 'crm.pipelines.index' }">
                 Pipelines
-            </RouterLink>
-            <RouterLink :to="{ name: 'crm.users.index' }" class="block text-slate-600 hover:text-slate-700">
+            </SidebarLink>
+            <SidebarLink :route="{ name: 'crm.users.index' }">
                 Users
-            </RouterLink>
+            </SidebarLink>
         </div>
         <div class="col-span-4 px-4 py-4">
             <h2 class="text-primary pb-2 border-b border-slate-200 text-h2 mb-4">{{ title }}</h2>
