@@ -49,8 +49,11 @@ const logoutHandle = () => {
             </RouterLink>
             <div class="h-1 border-b border-slate-200 my-4"></div>
             <p class="text-primary font-bold">Settings</p>
-            <RouterLink :to="{ name: 'crm.pipelines.index' }" class="text-slate-600 hover:text-slate-700">
+            <RouterLink :to="{ name: 'crm.pipelines.index' }" class="block text-slate-600 hover:text-slate-700">
                 Pipelines
+            </RouterLink>
+            <RouterLink :to="{ name: 'crm.users.index' }" class="block text-slate-600 hover:text-slate-700">
+                Users
             </RouterLink>
         </div>
         <div class="col-span-4 px-4 py-4">

@@ -12,17 +12,18 @@ import Pipelines from "@/api/pipelines/pipelines";
 import PipelineIndexResponse from "@/api/pipelines/responses/PipelineIndexResponse";
 import Trash from '@/components/icons/Trash.vue';
 import { useToast } from 'vue-toast-notification';
+import type Pipeline from '@/api/pipelines/dto/Pipeline';
 
 const toaster = useToast();
 
 const state: {
-    pipelines: PipelineIndexResponse | null
+    pipelines: Pipeline[] | null
 } = reactive({
     pipelines: null
 })
 
 const loadPipelines = async () => {
-    state.pipelines = await (new Pipelines).index();
+    state.pipelines = (await (new Pipelines).index()).getData();
 }
 
 const deleteHandle = async (id: number) => {
@@ -51,7 +52,7 @@ onMounted(async () => {
                 <TableHeadCell>Name</TableHeadCell>
             </TableHead>
             <TableBody>
-                <TableRow v-for="pipeline in state.pipelines?.getData()" :key="pipeline.getId()">
+                <TableRow v-for="pipeline in state.pipelines" :key="pipeline.getId()">
                     <TableCell>
                         <div class="flex justify-between">
                             <RouterLink class="hover:text-secondary"

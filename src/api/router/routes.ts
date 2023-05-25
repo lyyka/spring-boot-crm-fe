@@ -5,6 +5,8 @@ import ApiRoute from "./ApiRoute"
 import PipelineGetResponse from "@/api/pipelines/responses/PipelineGetResponse"
 import StageIndexResponse from "@/api/stages/responses/StageIndexResponse"
 import StageGetResponse from "@/api/stages/responses/StageGetResponse"
+import UserIndexResponse from "@/api/users/responses/UserIndexResponse"
+import RoleIndexResponse from "../roles/responses/RoleIndexResponse"
 
 /**
  * This file defines back-end API routes to be used by the Network object
@@ -13,6 +15,10 @@ import StageGetResponse from "@/api/stages/responses/StageGetResponse"
 export default {
     auth: {
         login: () => (new ApiRoute("/api/auth/login", "post", new LoginResponse)).noAuth()
+    },
+
+    roles: {
+        index: () => (new ApiRoute("/api/roles", "get", new RoleIndexResponse)),
     },
 
     pipelines: {
@@ -28,5 +34,11 @@ export default {
         get: (id: number) => (new ApiRoute("/api/stages/get/{id}", "get", new StageGetResponse).param("id", id)),
         update: (id: number) => (new ApiRoute("/api/stages/{id}", "put", new GenericResponse)).param('id', id),
         delete: (id: number) => (new ApiRoute("/api/stages/{id}", "delete", new GenericResponse)).param('id', id),
+    },
+
+    users: {
+        index: () => (new ApiRoute("/api/users", "get", new UserIndexResponse)),
+        store: () => (new ApiRoute("/api/users", "post", new GenericResponse)),
+        delete: (id: number) => (new ApiRoute("/api/users/{id}", "delete", new GenericResponse)).param('id', id),
     }
 }
