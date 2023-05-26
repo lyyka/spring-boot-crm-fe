@@ -1,3 +1,6 @@
+import DateHandle from "@/api/DateHandle";
+import { digitsOnly } from "@/api/Utils";
+
 interface IClient {
     id: number,
     firstName: string,
@@ -38,7 +41,11 @@ export default class Client {
         return this.data.phone;
     }
 
-    public getCreatedAt(): Date {
-        return new Date(this.data.createdAt);
+    public getPhoneNumbersOnly(): string {
+        return digitsOnly(this.getPhone());
+    }
+
+    public getCreatedAt(): DateHandle {
+        return new DateHandle(this.data.createdAt);
     }
 }
