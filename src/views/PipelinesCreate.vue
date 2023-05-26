@@ -29,7 +29,7 @@ const createHandle = async () => {
     <DashboardLayout title="Create new pipeline">
         <form>
             <Input v-model="state.name" label="Name" type="text" />
-            <Button text="Create" :disabled="!state.name" @click="createHandle" />
+            <Button :disabled="!state.name" @click="createHandle">Create</Button>
         </form>
     </DashboardLayout>
 </template>

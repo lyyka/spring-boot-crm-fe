@@ -47,8 +47,8 @@ const updateHandle = (id: number) => {
         ]" :title="state.stage?.getName() || 'Loading ...'">
             <form v-if="state.stage !== null">
                 <Input v-model="state.stage.data.name" label="Name" type="text" />
-                <Button text="Update" :disabled="!state.stage.getName()"
-                    @click="state.stage ? updateHandle(state.stage.getId()) : () => { }" />
+                <Button :disabled="!state.stage.getName()"
+                    @click="state.stage ? updateHandle(state.stage.getId()) : () => { }">Update</Button>
             </form>
         </DashboardLayout>
     </div>

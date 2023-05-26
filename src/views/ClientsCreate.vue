@@ -33,7 +33,7 @@ const createHandle = async () => {
             <Input v-model="state.request.lastName" label="Last name" type="text" />
             <Input v-model="state.request.email" label="Email" type="email" />
             <Input v-model="state.request.phoneNumber" label="Phone number" type="text" />
-            <Button text="Create" :disabled="!state.request.isValid()" @click="createHandle" />
+            <Button :disabled="!state.request.isValid()" @click="createHandle">Create</Button>
         </form>
     </DashboardLayout>
 </template>

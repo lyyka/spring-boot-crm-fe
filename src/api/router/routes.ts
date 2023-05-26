@@ -11,6 +11,7 @@ import UserGetResponse from "../users/responses/UserGetResponse"
 import ClientGetResponse from "../clients/responses/ClientGetResponse"
 import ClientIndexResponse from "../clients/responses/ClientIndexResponse"
 import type PagedRequest from "./PagedRequest"
+import DealsForClientResponse from "../deals/responses/DealsForClientResponse"
 
 /**
  * This file defines back-end API routes to be used by the Network object
@@ -23,6 +24,10 @@ export default {
 
     roles: {
         index: () => (new ApiRoute("/api/roles", "get", new RoleIndexResponse)),
+    },
+
+    deals: {
+        getForClient: (clientId: number) => (new ApiRoute("/api/deals/for-client/{clientId}", "get", new DealsForClientResponse)).param('clientId', clientId)
     },
 
     pipelines: {

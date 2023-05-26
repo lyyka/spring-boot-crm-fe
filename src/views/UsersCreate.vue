@@ -46,7 +46,7 @@ const createHandle = async () => {
                 return { value: role.getId(), label: role.getName() }
             })"></Select>
             <Checkbox v-model="state.request.enabled" label="Enabled" />
-            <Button text="Create" :disabled="!state.request.isValid()" @click="createHandle" />
+            <Button :disabled="!state.request.isValid()" @click="createHandle">Create</Button>
         </form>
     </DashboardLayout>
 </template>

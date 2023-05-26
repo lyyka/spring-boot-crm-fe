@@ -1,10 +1,10 @@
 import type ClientIndexResponse from "./responses/ClientIndexResponse";
 import Network from "@/api/router/Network";
 import routes from "@/api/router/routes";
-import type GenericResponse from "../router/GenericResponse";
-import type ClientGetResponse from "./responses/ClientGetResponse";
-import type ClientStoreRequest from "./requests/ClientStoreRequest";
-import type PagedRequest from "../router/PagedRequest";
+import type GenericResponse from "@/api/router/GenericResponse";
+import type ClientGetResponse from "@/api/clients/responses/ClientGetResponse";
+import type ClientStoreRequest from "@/api/clients/requests/ClientStoreRequest";
+import type PagedRequest from "@/api/router/PagedRequest";
 
 export default class Clients {
     public async index(request: PagedRequest): Promise<ClientIndexResponse> {

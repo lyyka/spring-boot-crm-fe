@@ -42,7 +42,7 @@ const logoutHandle = () => {
                 <p class="text-slate-300" v-else>{{ crumb.label }}</p>
             </div>
         </div>
-        <Button :remove-margin="true" text="Log out" @click="logoutHandle"></Button>
+        <Button :remove-margin="true" @click="logoutHandle">Log out</Button>
     </div>
     <div class="grid grid-cols-5 grid-rows-1 h-full">
         <div class="col-span-1 border-r border-slate-200 px-2 py-4">

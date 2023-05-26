@@ -53,7 +53,7 @@ onMounted(async () => {
 <template>
     <DashboardLayout title="Pipelines">
         <div class="flex justify-end">
-            <Button text="+ New" :route="{ name: 'crm.pipelines.create' }"></Button>
+            <Button :route="{ name: 'crm.pipelines.create' }">+ New</Button>
         </div>
         <Table>
             <TableHead>

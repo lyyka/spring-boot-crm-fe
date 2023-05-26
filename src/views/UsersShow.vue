@@ -59,7 +59,7 @@ const updateHandle = async () => {
                     return { value: role.getId(), label: role.getName() }
                 })"></Select>
                 <Checkbox v-model="state.user.data.enabled" label="Enabled" />
-                <Button text="Update" @click="updateHandle" />
+                <Button @click="updateHandle">Update</Button>
             </form>
         </DashboardLayout>
     </div>

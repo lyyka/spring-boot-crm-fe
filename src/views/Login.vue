@@ -33,7 +33,7 @@ const loginHandle = async (e: Event) => {
             <form>
                 <Input v-model="state.email" label="Email" type="email" />
                 <Input v-model="state.password" label="Password" type="password" />
-                <Button text="Log in" @click="loginHandle" />
+                <Button @click="loginHandle">Log in</Button>
             </form>
         </div>
     </div>

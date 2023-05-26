@@ -35,7 +35,7 @@ const changePageHandle = (increment: Increment) => {
 
 <template>
     <div v-if="pageable"
-        class="border-b border-l border-r border-slate-300 w-full py-2 px-4 flex items-center justify-between">
+        class="border-b border-l border-r border-slate-300 w-full py-2 px-4 rounded-bl-md rounded-br-md flex items-center justify-between">
         <p class="text-slate-500">{{ pageable.pageNumber * pageable.pageSize + 1 }} - {{ Math.min((pageable.pageNumber + 1)
             * pageable.pageSize,
             pageable.numberOfElements) }} of {{

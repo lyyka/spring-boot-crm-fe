@@ -67,8 +67,8 @@ const deleteStageHandle = (id: number) => {
     ]" :title="state.pipeline?.getName() || 'Loading ...'">
         <form v-if="state.pipeline !== null">
             <Input v-model="state.pipeline.data.name" label="Name" type="text" />
-            <Button text="Update" :disabled="!state.pipeline.getName()"
-                @click="state.pipeline ? updateHandle(state.pipeline.getId()) : () => { }" />
+            <Button :disabled="!state.pipeline.getName()"
+                @click="state.pipeline ? updateHandle(state.pipeline.getId()) : () => { }">Update</Button>
         </form>
 
         <h3 class="text-primary pb-2 border-b border-slate-200 text-h3 mb-4 mt-4">
