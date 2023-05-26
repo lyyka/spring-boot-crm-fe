@@ -10,6 +10,7 @@ import RoleIndexResponse from "../roles/responses/RoleIndexResponse"
 import UserGetResponse from "../users/responses/UserGetResponse"
 import ClientGetResponse from "../clients/responses/ClientGetResponse"
 import ClientIndexResponse from "../clients/responses/ClientIndexResponse"
+import type PagedRequest from "./PagedRequest"
 
 /**
  * This file defines back-end API routes to be used by the Network object
@@ -25,7 +26,7 @@ export default {
     },
 
     pipelines: {
-        index: () => (new ApiRoute("/api/pipelines", "get", new PipelineIndexResponse)),
+        index: (request: PagedRequest) => (new ApiRoute("/api/pipelines", "get", new PipelineIndexResponse)).paged(request),
         store: () => (new ApiRoute("/api/pipelines", "post", new GenericResponse)),
         update: (id: number) => (new ApiRoute("/api/pipelines/{id}", "put", new GenericResponse)).param('id', id),
         delete: (id: number) => (new ApiRoute("/api/pipelines/{id}", "delete", new GenericResponse)).param('id', id),
@@ -40,7 +41,7 @@ export default {
     },
 
     users: {
-        index: () => (new ApiRoute("/api/users", "get", new UserIndexResponse)),
+        index: (request: PagedRequest) => (new ApiRoute("/api/users", "get", new UserIndexResponse)).paged(request),
         get: (id: number) => (new ApiRoute("/api/users/{id}", "get", new UserGetResponse).param("id", id)),
         store: () => (new ApiRoute("/api/users", "post", new GenericResponse)),
         update: (id: number) => (new ApiRoute("/api/users/{id}", "put", new GenericResponse)).param('id', id),
@@ -48,7 +49,7 @@ export default {
     },
 
     clients: {
-        index: () => (new ApiRoute("/api/clients", "get", new ClientIndexResponse)),
+        index: (request: PagedRequest) => (new ApiRoute("/api/clients", "get", new ClientIndexResponse)).paged(request),
         get: (id: number) => (new ApiRoute("/api/clients/{id}", "get", new ClientGetResponse).param("id", id)),
         store: () => (new ApiRoute("/api/clients", "post", new GenericResponse)),
         update: (id: number) => (new ApiRoute("/api/clients/{id}", "put", new GenericResponse)).param('id', id),

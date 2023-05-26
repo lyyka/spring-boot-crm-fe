@@ -9,21 +9,29 @@ import Button from '@/components/ui/Button.vue';
 import TableHeadCell from '@/components/ui/TableHeadCell.vue';
 import { onMounted, reactive } from 'vue';
 import Pipelines from "@/api/pipelines/pipelines";
-import PipelineIndexResponse from "@/api/pipelines/responses/PipelineIndexResponse";
 import Trash from '@/components/icons/Trash.vue';
 import { useToast } from 'vue-toast-notification';
 import type Pipeline from '@/api/pipelines/dto/Pipeline';
+import type { Pageable } from '@/api/Pageable';
+import Pagination from '@/components/ui/Pagination.vue';
+import PagedRequest from '@/api/router/PagedRequest';
 
 const toaster = useToast();
 
 const state: {
-    pipelines: Pipeline[] | null
+    pipelines: Pipeline[] | null,
+    pageable: Pageable | null,
 } = reactive({
-    pipelines: null
+    pipelines: null,
+    pageable: null,
 })
 
 const loadPipelines = async () => {
-    state.pipelines = (await (new Pipelines).index()).getData();
+    const response = await (new Pipelines).index(
+        new PagedRequest(state.pageable)
+    );
+    state.pipelines = response.getData();
+    state.pageable = response.getPageable();
 }
 
 const deleteHandle = async (id: number) => {
@@ -68,5 +76,6 @@ onMounted(async () => {
                 </TableRow>
             </TableBody>
         </Table>
+        <Pagination @page-update="loadPipelines" :pageable="state.pageable"></Pagination>
     </DashboardLayout>
 </template>

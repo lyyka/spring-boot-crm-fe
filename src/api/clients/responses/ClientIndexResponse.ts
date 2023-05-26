@@ -1,14 +1,14 @@
-import type ApiResponse from "@/api/router/ApiResponse";
 import Client from "@/api/clients/dto/Client";
+import PagedResponse from "@/api/router/PagedResponse";
 
-export default class ClientIndexResponse implements ApiResponse {
+export default class ClientIndexResponse extends PagedResponse {
     private data: Client[] = [];
 
     public getData(): Client[] {
         return this.data;
     }
 
-    setData(data: any): void {
-        this.data = data.data.map((e: any) => new Client(e));
+    loadPage(items: any[]): void {
+        this.data = items.map((e: any) => new Client(e));
     }
 }

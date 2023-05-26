@@ -4,10 +4,11 @@ import routes from "@/api/router/routes";
 import type GenericResponse from "../router/GenericResponse";
 import type UserStoreRequest from "./requests/UserStoreRequest";
 import type UserGetResponse from "./responses/UserGetResponse";
+import type PagedRequest from "../router/PagedRequest";
 
 export default class Users {
-    public async index(): Promise<UserIndexResponse> {
-        const data = await (new Network).handle(routes.users.index());
+    public async index(request: PagedRequest): Promise<UserIndexResponse> {
+        const data = await (new Network).handle(routes.users.index(request));
         const cast = data as UserIndexResponse;
         return cast;
     }

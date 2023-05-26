@@ -12,17 +12,26 @@ import Trash from '@/components/icons/Trash.vue';
 import { useToast } from 'vue-toast-notification';
 import Client from "@/api/clients/dto/Client";
 import Clients from "@/api/clients/clients";
+import type { Pageable } from '@/api/Pageable';
+import Pagination from '@/components/ui/Pagination.vue';
+import PagedRequest from '@/api/router/PagedRequest';
 
 const toaster = useToast();
 
 const state: {
-    clients: Client[] | null
+    clients: Client[] | null,
+    pageable: Pageable | null,
 } = reactive({
-    clients: null
+    clients: null,
+    pageable: null,
 })
 
 const loadClients = async () => {
-    state.clients = (await (new Clients).index()).getData();
+    const response = (await (new Clients).index(
+        new PagedRequest(state.pageable)
+    ));
+    state.clients = response.getData();
+    state.pageable = response.getPageable();
 }
 
 const deleteHandle = async (id: number) => {
@@ -78,5 +87,6 @@ onMounted(async () => {
                 </TableRow>
             </TableBody>
         </Table>
+        <Pagination @page-update="loadClients" :pageable="state.pageable"></Pagination>
     </DashboardLayout>
 </template>

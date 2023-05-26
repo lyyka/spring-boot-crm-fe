@@ -1,14 +1,14 @@
-import type ApiResponse from "@/api/router/ApiResponse";
+import PagedResponse from "@/api/router/PagedResponse";
 import User from "@/api/users/dto/User";
 
-export default class UserIndexResponse implements ApiResponse {
+export default class UserIndexResponse extends PagedResponse {
     private data: User[] = [];
 
     public getData(): User[] {
         return this.data;
     }
 
-    setData(data: any): void {
-        this.data = data.data.map((e: any) => new User(e));
+    loadPage(items: any[]): void {
+        this.data = items.map((e: any) => new User(e));
     }
 }
