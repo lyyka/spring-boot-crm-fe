@@ -20,7 +20,7 @@ export default class ApiRoute {
         this.expectedResponse = expectedResponse;
     }
 
-    public paged(pagedRequest: PagedRequest): ApiRoute {
+    public paged(pagedRequest: PagedRequest | null): ApiRoute {
         this.pagedRequest = pagedRequest;
         return this;
     }

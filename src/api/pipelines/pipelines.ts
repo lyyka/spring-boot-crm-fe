@@ -5,6 +5,7 @@ import type PipelineIndexResponse from "./responses/PipelineIndexResponse";
 import type GenericResponse from "@/api/router/GenericResponse";
 import type PipelineGetResponse from "./responses/PipelineGetResponse";
 import type PagedRequest from "../router/PagedRequest";
+import type PipelineAllResponse from "./responses/PipelineAllResponse";
 
 export default class Pipelines {
     public async get(id: number): Promise<PipelineGetResponse> {
@@ -13,7 +14,13 @@ export default class Pipelines {
         return cast;
     }
 
-    public async index(request: PagedRequest): Promise<PipelineIndexResponse> {
+    public async all(): Promise<PipelineAllResponse> {
+        const data = await (new Network).handle(routes.pipelines.all());
+        const cast = data as PipelineAllResponse;
+        return cast;
+    }
+
+    public async index(request: PagedRequest | null): Promise<PipelineIndexResponse> {
         const data = await (new Network).handle(routes.pipelines.index(request));
         const cast = data as PipelineIndexResponse;
         return cast;

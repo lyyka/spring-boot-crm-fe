@@ -12,6 +12,7 @@ import ClientGetResponse from "../clients/responses/ClientGetResponse"
 import ClientIndexResponse from "../clients/responses/ClientIndexResponse"
 import type PagedRequest from "./PagedRequest"
 import DealsForClientResponse from "../deals/responses/DealsForClientResponse"
+import PipelineAllResponse from "../pipelines/responses/PipelineAllResponse"
 
 /**
  * This file defines back-end API routes to be used by the Network object
@@ -28,11 +29,13 @@ export default {
 
     deals: {
         getForClient: (clientId: number) => (new ApiRoute("/api/deals/for-client/{clientId}", "get", new DealsForClientResponse)).param('clientId', clientId),
+        store: () => (new ApiRoute("/api/deals", "post", new GenericResponse)),
         delete: (id: number) => (new ApiRoute("/api/deals/{id}", "delete", new GenericResponse)).param('id', id),
     },
 
     pipelines: {
-        index: (request: PagedRequest) => (new ApiRoute("/api/pipelines", "get", new PipelineIndexResponse)).paged(request),
+        all: () => (new ApiRoute("/api/pipelines/all", "get", new PipelineAllResponse)),
+        index: (request: PagedRequest | null) => (new ApiRoute("/api/pipelines", "get", new PipelineIndexResponse)).paged(request),
         store: () => (new ApiRoute("/api/pipelines", "post", new GenericResponse)),
         update: (id: number) => (new ApiRoute("/api/pipelines/{id}", "put", new GenericResponse)).param('id', id),
         delete: (id: number) => (new ApiRoute("/api/pipelines/{id}", "delete", new GenericResponse)).param('id', id),

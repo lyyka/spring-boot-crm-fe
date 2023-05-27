@@ -15,7 +15,7 @@ const close = () => {
 }
 
 defineExpose({
-    open,
+    open, close,
 });
 
 </script>

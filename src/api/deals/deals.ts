@@ -2,6 +2,7 @@ import Network from "@/api/router/Network";
 import routes from "@/api/router/routes";
 import type GenericResponse from "../router/GenericResponse";
 import type DealsForClientResponse from "./responses/DealsForClientResponse";
+import type DealStoreRequest from "./requests/DealStoreRequest";
 
 export default class Deals {
     // public async index(request: PagedRequest): Promise<ClientIndexResponse> {
@@ -16,14 +17,14 @@ export default class Deals {
         return cast;
     }
 
-    // public async store(request: ClientStoreRequest): Promise<GenericResponse> {
-    //     const data = await (new Network)
-    //         .setData(request)
-    //         .handle(routes.clients.store());
+    public async store(request: DealStoreRequest): Promise<GenericResponse> {
+        const data = await (new Network)
+            .setData(request)
+            .handle(routes.deals.store());
 
-    //     const cast = data as GenericResponse;
-    //     return Promise.resolve(cast);
-    // }
+        const cast = data as GenericResponse;
+        return Promise.resolve(cast);
+    }
 
     // public async update(id: number, request: ClientStoreRequest): Promise<GenericResponse> {
     //     const data = await (new Network)
