@@ -44,16 +44,20 @@ onMounted(async () => {
         .then(data => {
             state.client = data.getData();
 
-            if (state.client) {
-                (new Deals).getForClient(state.client.getId())
-                    .then(data => {
-                        state.deals = data.getData();
-                    })
-                    .catch(e => toaster.error("Failed loading deals for this user"));
-            }
+            loadDeals();
         })
-        .catch(e => toaster.error("Failed loading the user"));
+        .catch(_e => toaster.error("Failed loading the user"));
 });
+
+const loadDeals = () => {
+    if (state.client) {
+        (new Deals).getForClient(state.client.getId())
+            .then(data => {
+                state.deals = data.getData();
+            })
+            .catch(_e => toaster.error("Failed loading deals for this user"));
+    }
+};
 
 const updateHandle = async () => {
     if (state.client) {
@@ -61,13 +65,18 @@ const updateHandle = async () => {
         req.fromEntity(state.client);
         if (req.isValid())
             (new Clients).update(state.client.getId(), req)
-                .then(r => toaster.success("Updated!"))
-                .catch(e => toaster.error("Error!"));
+                .then(_r => toaster.success("Updated!"))
+                .catch(_e => toaster.error("Error!"));
     }
 };
 
 const dealDeleteHandle = async (dealId: number) => {
-
+    (new Deals).delete(dealId)
+        .then((_r: any) => {
+            toaster.success("Deleted");
+            loadDeals();
+        })
+        .catch((_e: any) => toaster.error("Failed loading deals for this user"));
 }
 </script>
 <template>
@@ -101,7 +110,7 @@ const dealDeleteHandle = async (dealId: number) => {
                 <TableHead>
                     <TableHeadCell>Name</TableHeadCell>
                     <TableHeadCell>Status</TableHeadCell>
-                    <TableHeadCell>Stage</TableHeadCell>
+                    <TableHeadCell>Pipeline</TableHeadCell>
                     <TableHeadCell>Date</TableHeadCell>
                     <TableHeadCell></TableHeadCell>
                 </TableHead>
@@ -124,7 +133,8 @@ const dealDeleteHandle = async (dealId: number) => {
                         </TableCell>
 
                         <TableCell>
-                            {{ deal.getStageName() }}
+                            <strong>{{ deal.getPipelineName() }}</strong> / {{ deal.getStageName() }}
+
                         </TableCell>
 
                         <TableCell>

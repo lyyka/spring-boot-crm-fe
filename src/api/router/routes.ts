@@ -27,7 +27,8 @@ export default {
     },
 
     deals: {
-        getForClient: (clientId: number) => (new ApiRoute("/api/deals/for-client/{clientId}", "get", new DealsForClientResponse)).param('clientId', clientId)
+        getForClient: (clientId: number) => (new ApiRoute("/api/deals/for-client/{clientId}", "get", new DealsForClientResponse)).param('clientId', clientId),
+        delete: (id: number) => (new ApiRoute("/api/deals/{id}", "delete", new GenericResponse)).param('id', id),
     },
 
     pipelines: {

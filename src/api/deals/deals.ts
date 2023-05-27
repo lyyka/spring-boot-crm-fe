@@ -34,11 +34,11 @@ export default class Deals {
     //     return Promise.resolve(cast);
     // }
 
-    // public async delete(id: number): Promise<GenericResponse> {
-    //     const data = await (new Network)
-    //         .handle(routes.clients.delete(id));
+    public async delete(id: number): Promise<GenericResponse> {
+        const data = await (new Network)
+            .handle(routes.deals.delete(id));
 
-    //     const cast = data as GenericResponse;
-    //     return Promise.resolve(cast);
-    // }
+        const cast = data as GenericResponse;
+        return Promise.resolve(cast);
+    }
 }

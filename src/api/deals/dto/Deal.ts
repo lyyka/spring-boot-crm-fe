@@ -8,6 +8,7 @@ interface IDeal {
     dealStatus: IDealStatus,
     stageId: number,
     stageName: string,
+    pipelineName: string,
     createdAt: string,
     updatedAt: string,
 }
@@ -37,6 +38,10 @@ export default class Deal {
 
     public getStageName(): string {
         return this.data.stageName;
+    }
+
+    public getPipelineName(): string {
+        return this.data.pipelineName;
     }
 
     public getCreatedAt(): DateHandle {
