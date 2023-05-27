@@ -5,6 +5,7 @@ import Deal from '@/api/deals/dto/Deal';
 import { IDealStatus } from '@/api/deals/dto/IDealStatus';
 import Deals from '@/api/deals/deals';
 import DashboardLayout from '@/components/layouts/DashboardLayout.vue';
+import Load from '@/components/layouts/Load.vue';
 import Input from '@/components/ui/Input.vue';
 import Card from '@/components/ui/Card.vue';
 import Button from '@/components/ui/Button.vue';
@@ -69,30 +70,26 @@ const dealDeleteHandle = async (dealId: number) => {
 
 }
 </script>
-
 <template>
-    <div v-if="state.client">
-        <DashboardLayout :crumbs="[
-            { label: 'Clients', route: { name: 'crm.clients.index' } },
-            { label: state.client.getFullName() }
-        ]" :title="state.client.getFullName()">
+    <DashboardLayout :crumbs="[
+        { label: 'Clients', route: { name: 'crm.clients.index' } },
+        { label: state.client?.getFullName() }
+    ]" :title="state.client?.getFullName()">
+        <Load :until="state.client !== null">
             <!-- header -->
             <div class="flex justify-between items-center">
                 <div class="flex gap-4">
                     <Card class="flex items-center">
                         <Phone class="mr-2" />
-                        <a :href="`tel:+${state.client.getPhoneNumbersOnly()}`">{{ state.client.getPhone() }}</a>
+                        <a :href="`tel:+${state.client?.getPhoneNumbersOnly()}`">{{ state.client?.getPhone() }}</a>
                     </Card>
                     <Card class="flex items-center">
                         <Email class="mr-2" />
-                        <a :href="`mailto:${state.client.getEmail()}`">{{ state.client.getEmail() }}</a>
+                        <a :href="`mailto:${state.client?.getEmail()}`">{{ state.client?.getEmail() }}</a>
                     </Card>
                     <Card class="flex items-center">
                         <Calendar class="mr-2" />
-                        Created at: {{ state.client.getCreatedAt().format({
-                            year: 'numeric', month: 'numeric', day:
-                                'numeric'
-                        }) }}
+                        Created at: {{ state.client?.getCreatedAt().format() }}
                     </Card>
                 </div>
                 <Button @click="() => { modal.open() }">Edit client</Button>
@@ -105,6 +102,7 @@ const dealDeleteHandle = async (dealId: number) => {
                     <TableHeadCell>Name</TableHeadCell>
                     <TableHeadCell>Status</TableHeadCell>
                     <TableHeadCell>Stage</TableHeadCell>
+                    <TableHeadCell>Date</TableHeadCell>
                     <TableHeadCell></TableHeadCell>
                 </TableHead>
                 <TableBody>
@@ -130,6 +128,10 @@ const dealDeleteHandle = async (dealId: number) => {
                         </TableCell>
 
                         <TableCell>
+                            {{ deal.getCreatedAt().format() }}
+                        </TableCell>
+
+                        <TableCell>
                             <button class="flex items-center" @click="dealDeleteHandle(deal.getId())">
                                 <Trash></Trash>
                             </button>
@@ -141,16 +143,16 @@ const dealDeleteHandle = async (dealId: number) => {
                 class="px-4 py-2 rounded-bl-md rounded-br-md border-b border-l border-r w-full border-slate-300 text-right">
                 <Button :remove-margin="true">+ New deal</Button>
             </div>
-        </DashboardLayout>
+        </Load>
+    </DashboardLayout>
 
-        <Modal ref="modal">
-            <form>
-                <Input v-model="state.client.data.firstName" label="First name" type="text" />
-                <Input v-model="state.client.data.lastName" label="Last name" type="text" />
-                <Input v-model="state.client.data.email" label="Email" type="email" />
-                <Input v-model="state.client.data.phone" label="Phone number" type="text" />
-                <Button @click="updateHandle">Update</Button>
-            </form>
-        </Modal>
-    </div>
+    <Modal ref="modal" v-if="state.client">
+        <form>
+            <Input v-model="state.client.data.firstName" label="First name" type="text" />
+            <Input v-model="state.client.data.lastName" label="Last name" type="text" />
+            <Input v-model="state.client.data.email" label="Email" type="email" />
+            <Input v-model="state.client.data.phone" label="Phone number" type="text" />
+            <Button @click="updateHandle">Update</Button>
+        </form>
+    </Modal>
 </template>

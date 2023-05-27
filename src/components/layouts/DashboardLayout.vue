@@ -11,13 +11,13 @@ export interface CrumbRoute {
 }
 
 export interface Crumb {
-    label: string,
+    label?: string,
     route?: CrumbRoute
 }
 
 export interface Props {
     crumbs?: Crumb[],
-    title: string
+    title?: string
 }
 
 defineProps<Props>()
@@ -62,7 +62,7 @@ const logoutHandle = () => {
                 Users
             </SidebarLink>
         </div>
-        <div class="col-span-4 px-4 py-4">
+        <div class="col-span-4 px-4 py-4 relative">
             <h2 class="text-primary pb-2 border-b border-slate-200 text-h2 mb-4">{{ title }}</h2>
             <slot></slot>
         </div>

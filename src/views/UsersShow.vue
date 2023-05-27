@@ -12,6 +12,7 @@ import { useToast } from 'vue-toast-notification';
 import Roles from '@/api/roles/roles';
 import Role from '@/api/roles/dto/Role';
 import UserStoreRequest from '@/api/users/requests/UserStoreRequest';
+import Load from '@/components/layouts/Load.vue';
 
 const route = useRoute();
 const toaster = useToast();
@@ -46,12 +47,12 @@ const updateHandle = async () => {
 </script>
 
 <template>
-    <div v-if="state.user">
-        <DashboardLayout :crumbs="[
-            { label: 'Users', route: { name: 'crm.users.index' } },
-            { label: state.user.getFullName() }
-        ]" :title="state.user.getFullName()">
-            <form>
+    <DashboardLayout :crumbs="[
+        { label: 'Users', route: { name: 'crm.users.index' } },
+        { label: state.user?.getFullName() }
+    ]" :title="state.user?.getFullName()">
+        <Load :until="state.user !== null">
+            <form v-if="state.user">
                 <Input v-model="state.user.data.firstName" label="First name" type="text" />
                 <Input v-model="state.user.data.lastName" label="Last name" type="text" />
                 <Input v-model="state.user.data.email" label="Email" type="email" />
@@ -61,6 +62,6 @@ const updateHandle = async () => {
                 <Checkbox v-model="state.user.data.enabled" label="Enabled" />
                 <Button @click="updateHandle">Update</Button>
             </form>
-        </DashboardLayout>
-    </div>
+        </Load>
+    </DashboardLayout>
 </template>

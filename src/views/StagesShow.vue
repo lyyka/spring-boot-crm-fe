@@ -8,6 +8,7 @@ import { useToast } from 'vue-toast-notification';
 import Input from '@/components/ui/Input.vue';
 import Button from '@/components/ui/Button.vue';
 import type Pipeline from '@/api/pipelines/dto/Pipeline';
+import Load from '@/components/layouts/Load.vue';
 
 const route = useRoute();
 const toaster = useToast();
@@ -21,10 +22,12 @@ const state: {
 })
 
 onMounted(async () => {
-    state.stage = (await (new Stages).get(Number(route.params['id']))).getStage();
-    if (state.stage) {
-        state.pipeline = state.stage.getPipeline();
-    }
+    (new Stages).get(Number(route.params['id']))
+        .then(e => {
+            state.stage = e.getStage();
+            if (state.stage)
+                state.pipeline = state.stage.getPipeline();
+        })
 });
 
 const updateHandle = (id: number) => {
@@ -39,17 +42,17 @@ const updateHandle = (id: number) => {
 </script>
 
 <template>
-    <div v-if="state.stage && state.pipeline">
-        <DashboardLayout :crumbs="[
-            { label: 'Pipelines', route: { name: 'crm.pipelines.index' } },
-            { label: state.pipeline.getName(), route: { name: 'crm.pipelines.show', params: { id: state.pipeline.getId() } } },
-            { label: state.stage.getName() },
-        ]" :title="state.stage?.getName() || 'Loading ...'">
+    <DashboardLayout :crumbs="[
+        { label: 'Pipelines', route: { name: 'crm.pipelines.index' } },
+        { label: state.pipeline?.getName(), route: { name: 'crm.pipelines.show', params: { id: state.pipeline?.getId() } } },
+        { label: state.stage?.getName() },
+    ]" :title="state.stage?.getName()">
+        <Load :until="state.stage !== null">
             <form v-if="state.stage !== null">
                 <Input v-model="state.stage.data.name" label="Name" type="text" />
                 <Button :disabled="!state.stage.getName()"
                     @click="state.stage ? updateHandle(state.stage.getId()) : () => { }">Update</Button>
             </form>
-        </DashboardLayout>
-    </div>
+        </Load>
+    </DashboardLayout>
 </template>

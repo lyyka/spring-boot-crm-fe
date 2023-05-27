@@ -11,7 +11,7 @@ export default class DateHandle {
         this.date = new Date(dateStr)
     }
 
-    public format(format: DateFormat) {
+    public format(format: DateFormat = { year: 'numeric', month: 'numeric', day: 'numeric' }) {
         return (new Intl.DateTimeFormat('en', format).format(this.date));
     }
 }

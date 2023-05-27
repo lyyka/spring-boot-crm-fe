@@ -12,6 +12,7 @@ import Button from '@/components/ui/Button.vue';
 import Pipelines from '@/api/pipelines/pipelines';
 import Stages from '@/api/stages/stages';
 import DashboardLayout from '@/components/layouts/DashboardLayout.vue';
+import Load from '@/components/layouts/Load.vue';
 import { onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
@@ -37,8 +38,11 @@ const loadStages = () => {
 }
 
 onMounted(async () => {
-    state.pipeline = (await (new Pipelines).get(Number(route.params['id']))).getPipeline();
-    loadStages();
+    (new Pipelines).get(Number(route.params['id']))
+        .then(r => {
+            state.pipeline = r.getPipeline();
+            loadStages();
+        }).catch(e => toaster.error("Failed loading the pipeline"));
 });
 
 const updateHandle = (id: number) => {
@@ -64,36 +68,38 @@ const deleteStageHandle = (id: number) => {
     <DashboardLayout :crumbs="[
         { label: 'Pipelines', route: { name: 'crm.pipelines.index' } },
         { label: state.pipeline?.getName() || '' }
-    ]" :title="state.pipeline?.getName() || 'Loading ...'">
-        <form v-if="state.pipeline !== null">
-            <Input v-model="state.pipeline.data.name" label="Name" type="text" />
-            <Button :disabled="!state.pipeline.getName()"
-                @click="state.pipeline ? updateHandle(state.pipeline.getId()) : () => { }">Update</Button>
-        </form>
+    ]" :title="state.pipeline?.getName()">
+        <Load :until="state.pipeline !== null">
+            <form v-if="state.pipeline !== null">
+                <Input v-model="state.pipeline.data.name" label="Name" type="text" />
+                <Button :disabled="!state.pipeline.getName()"
+                    @click="state.pipeline ? updateHandle(state.pipeline.getId()) : () => { }">Update</Button>
+            </form>
 
-        <h3 class="text-primary pb-2 border-b border-slate-200 text-h3 mb-4 mt-4">
-            Stages
-        </h3>
-        <Table>
-            <TableHead>
-                <TableHeadCell>Name</TableHeadCell>
-            </TableHead>
-            <TableBody>
-                <TableRow v-for="stage in state.stages" :key="stage.getId()">
-                    <TableCell>
-                        <div class="flex justify-between">
-                            <RouterLink class="hover:text-secondary"
-                                :to="{ name: 'crm.stages.show', params: { id: stage.getId() } }">
-                                {{ stage.getName() }}
-                            </RouterLink>
+            <h3 class="text-primary pb-2 border-b border-slate-200 text-h3 mb-4 mt-4">
+                Stages
+            </h3>
+            <Table>
+                <TableHead>
+                    <TableHeadCell>Name</TableHeadCell>
+                </TableHead>
+                <TableBody>
+                    <TableRow v-for="stage in state.stages" :key="stage.getId()">
+                        <TableCell>
+                            <div class="flex justify-between">
+                                <RouterLink class="hover:text-secondary"
+                                    :to="{ name: 'crm.stages.show', params: { id: stage.getId() } }">
+                                    {{ stage.getName() }}
+                                </RouterLink>
 
-                            <button class="flex items-center" @click="deleteStageHandle(stage.getId())">
-                                <Trash></Trash>
-                            </button>
-                        </div>
-                    </TableCell>
-                </TableRow>
-            </TableBody>
-        </Table>
+                                <button class="flex items-center" @click="deleteStageHandle(stage.getId())">
+                                    <Trash></Trash>
+                                </button>
+                            </div>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </Load>
     </DashboardLayout>
 </template>
