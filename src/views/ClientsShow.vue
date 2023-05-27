@@ -123,7 +123,7 @@ const loadStagesForPipeline = async (pipelineId: number) => {
     <DashboardLayout :crumbs="[
         { label: 'Clients', route: { name: 'crm.clients.index' } },
         { label: state.client?.getFullName() }
-    ]" :title="state.client?.getFullName()">
+    ]">
         <Load :until="state.client !== null">
             <!-- header -->
             <div class="flex justify-between items-center">

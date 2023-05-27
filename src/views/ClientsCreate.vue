@@ -27,7 +27,9 @@ const createHandle = async () => {
 </script>
 
 <template>
-    <DashboardLayout title="Create new client">
+    <DashboardLayout :crumbs="[
+        { label: 'Clients', route: { name: 'crm.clients.index' } },
+    ]" title="Create new client">
         <form>
             <Input v-model="state.request.firstName" label="First name" type="text" />
             <Input v-model="state.request.lastName" label="Last name" type="text" />

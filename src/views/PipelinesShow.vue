@@ -67,7 +67,6 @@ const deleteStageHandle = (id: number) => {
 <template>
     <DashboardLayout :crumbs="[
         { label: 'Pipelines', route: { name: 'crm.pipelines.index' } },
-        { label: state.pipeline?.getName() || '' }
     ]" :title="state.pipeline?.getName()">
         <Load :until="state.pipeline !== null">
             <form v-if="state.pipeline !== null">

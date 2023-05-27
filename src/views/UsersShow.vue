@@ -49,7 +49,6 @@ const updateHandle = async () => {
 <template>
     <DashboardLayout :crumbs="[
         { label: 'Users', route: { name: 'crm.users.index' } },
-        { label: state.user?.getFullName() }
     ]" :title="state.user?.getFullName()">
         <Load :until="state.user !== null">
             <form v-if="state.user">

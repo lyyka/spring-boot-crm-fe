@@ -45,7 +45,6 @@ const updateHandle = (id: number) => {
     <DashboardLayout :crumbs="[
         { label: 'Pipelines', route: { name: 'crm.pipelines.index' } },
         { label: state.pipeline?.getName(), route: { name: 'crm.pipelines.show', params: { id: state.pipeline?.getId() } } },
-        { label: state.stage?.getName() },
     ]" :title="state.stage?.getName()">
         <Load :until="state.stage !== null">
             <form v-if="state.stage !== null">

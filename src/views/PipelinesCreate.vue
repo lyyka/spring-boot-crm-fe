@@ -26,7 +26,9 @@ const createHandle = async () => {
 </script>
 
 <template>
-    <DashboardLayout title="Create new pipeline">
+    <DashboardLayout :crumbs="[
+        { label: 'Pipelines', route: { name: 'crm.pipelines.index' } }
+    ]" title="Create new pipeline">
         <form>
             <Input v-model="state.name" label="Name" type="text" />
             <Button :disabled="!state.name" @click="createHandle">Create</Button>
