@@ -20,8 +20,8 @@ export default class Pipelines {
         return cast;
     }
 
-    public async index(request: PagedRequest | null): Promise<PipelineIndexResponse> {
-        const data = await (new Network).handle(routes.pipelines.index(request));
+    public async index(request: PagedRequest): Promise<PipelineIndexResponse> {
+        const data = await (new Network).setData(request).handle(routes.pipelines.index());
         const cast = data as PipelineIndexResponse;
         return cast;
     }

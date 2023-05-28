@@ -1,6 +1,7 @@
 <script setup lang="ts">
 defineProps<{
-    label: string
+    label?: string
+    placeholder?: string
     type: string
     modelValue: any
 }>()
@@ -12,7 +13,8 @@ function inputHandle(e: Event) {
 </script>
 <template>
     <div class="mb-3">
-        <label class="mb-2 text-slate-800 block">{{ label }}</label>
-        <input :type="type" :value="modelValue" @input="inputHandle" class="block rounded-md p-1 border border-slate-400 text-base w-full" />
+        <label v-if="label" class="mb-2 text-slate-800 block">{{ label }}</label>
+        <input :type="type" :placeholder="placeholder" :value="modelValue" @input="inputHandle"
+            class="block rounded-sm py-1.5 px-3 focus:ring-0 focus:border-slate-400 border border-slate-300 text-base w-full" />
     </div>
 </template>

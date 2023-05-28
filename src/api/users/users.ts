@@ -8,7 +8,7 @@ import type PagedRequest from "../router/PagedRequest";
 
 export default class Users {
     public async index(request: PagedRequest): Promise<UserIndexResponse> {
-        const data = await (new Network).handle(routes.users.index(request));
+        const data = await (new Network).setData(request).handle(routes.users.index());
         const cast = data as UserIndexResponse;
         return cast;
     }

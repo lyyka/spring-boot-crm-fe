@@ -1,4 +1,5 @@
 import type ApiResponse from "./ApiResponse";
+import type { HttpMethod } from "./Network";
 import type PagedRequest from "./PagedRequest";
 
 /**
@@ -7,22 +8,16 @@ import type PagedRequest from "./PagedRequest";
  */
 export default class ApiRoute {
     private route: string;
-    private method: string;
+    private method: HttpMethod;
     private expectedResponse: ApiResponse;
     private base = 'http://localhost:8080';
     private auth = true;
     private params: { [key: string]: number | string } = {}
-    private pagedRequest: PagedRequest | null = null;
 
-    constructor(route: string, method: string, expectedResponse: ApiResponse) {
+    constructor(route: string, method: HttpMethod, expectedResponse: ApiResponse) {
         this.route = route;
         this.method = method;
         this.expectedResponse = expectedResponse;
-    }
-
-    public paged(pagedRequest: PagedRequest | null): ApiRoute {
-        this.pagedRequest = pagedRequest;
-        return this;
     }
 
     public param(key: string, value: number | string): ApiRoute {
@@ -39,26 +34,12 @@ export default class ApiRoute {
         return this.auth;
     }
 
-    public getMethod(): string {
+    public getMethod(): HttpMethod {
         return this.method;
     }
 
     public getExpectedResponse() {
         return this.expectedResponse;
-    }
-
-    public objectToQuery(object: { [key: string]: string | number }): string {
-        let result: Array<string> = [];
-        Object.keys(object).forEach(paramName => {
-            result.push(`${paramName}=${object[paramName]}`);
-        })
-        let queryString = result.join("&");
-
-        if (queryString.length > 0) {
-            queryString = "?" + queryString;
-        }
-
-        return queryString;
     }
 
     public render(): string {
@@ -68,13 +49,6 @@ export default class ApiRoute {
             routeClean = routeClean.replace(`{${k}}`, this.params[k].toString())
         });
 
-        const queryParams: { page?: number, perPage?: number } = {};
-        if (this.pagedRequest) {
-            queryParams.page = this.pagedRequest.page;
-            queryParams.perPage = this.pagedRequest.perPage;
-        }
-        const query = this.objectToQuery(queryParams);
-
-        return `${this.base}${routeClean}${query}`;
+        return `${this.base}${routeClean}`;
     }
 }

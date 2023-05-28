@@ -24,7 +24,7 @@ defineExpose({
     <div @keydown.esc="close" tabindex="0" :class="state.opened ? 'flex' : 'hidden'"
         class="fixed w-full h-full top-0 left-0 justify-center items-center bg-neutral-950 bg-opacity-50">
         <!-- modal -->
-        <div class="w-1/2 rounded-md bg-white border border-slate-300 p-6">
+        <div class="w-1/2 rounded-sm bg-white border border-slate-300 p-6">
             <div class="mb-4 flex justify-end">
                 <Close class="cursor-pointer" @click="close" />
             </div>

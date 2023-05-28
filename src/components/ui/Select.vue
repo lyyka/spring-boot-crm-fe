@@ -32,7 +32,7 @@ function changeHandle(e: Event) {
     <div class="mb-3">
         <label class="mb-2 text-slate-800 block">{{ label }}</label>
         <select :value="state.modelValue" @change="changeHandle"
-            class="block rounded-md p-1 border border-slate-400 text-base w-full">
+            class="block rounded-sm p-1 border border-slate-400 text-base w-full">
             <option v-for="option in options" :value="option.value">{{
                 option.label }}</option>
         </select>

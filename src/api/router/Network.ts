@@ -3,6 +3,13 @@ import type ApiRoute from "./ApiRoute";
 import type ApiRequest from "./ApiRequest";
 import type ApiResponse from "./ApiResponse";
 
+export enum HttpMethod {
+    GET = 'get',
+    POST = 'post',
+    PUT = 'put',
+    DELETE = 'delete',
+}
+
 /**
  * This class is responsible for making http requests
  * and mapping the response to provided classes
@@ -11,7 +18,10 @@ export default class Network {
     private data: Object = {};
 
     public setData(request: ApiRequest): Network {
-        this.data = request.getData();
+        this.data = {
+            ...this.data,
+            ...request.getData()
+        };
         return this;
     }
 
@@ -19,10 +29,16 @@ export default class Network {
         const request = {
             method: route.getMethod(),
             url: route.render(),
-            data: this.data,
-            headers: {
-            }
+            params: {},
+            data: {},
+            headers: {}
         };
+
+        if ([HttpMethod.GET, HttpMethod.DELETE].includes(route.getMethod())) {
+            request.params = this.data;
+        } else if ([HttpMethod.POST, HttpMethod.PUT].includes(route.getMethod())) {
+            request.data = this.data;
+        }
 
         if (route.isAuth()) {
             request.headers = {

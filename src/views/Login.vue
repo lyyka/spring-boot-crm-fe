@@ -26,7 +26,7 @@ const loginHandle = async (e: Event) => {
     <PublicNavbar />
 
     <div class="flex justify-center items-center px-5 py-20">
-        <div class="rounded-md border border-slate-300 p-8 w-96">
+        <div class="rounded-sm border border-slate-300 p-8 w-96">
             <RouterLink :to="{ name: 'home' }" class="text-primary">
                 &lt; Go home</RouterLink>
             <h3 class="text-primary text-h3 mb-4">Log in</h3>
