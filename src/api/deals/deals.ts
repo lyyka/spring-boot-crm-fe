@@ -26,6 +26,15 @@ export default class Deals {
         return Promise.resolve(cast);
     }
 
+    public async updateStage(id: number, stageId: number): Promise<GenericResponse> {
+        const data = await (new Network)
+            .setRawData({ stageId })
+            .handle(routes.deals.updateStage(id));
+
+        const cast = data as GenericResponse;
+        return Promise.resolve(cast);
+    }
+
     // public async update(id: number, request: ClientStoreRequest): Promise<GenericResponse> {
     //     const data = await (new Network)
     //         .setData(request)

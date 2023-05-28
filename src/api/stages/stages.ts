@@ -4,11 +4,18 @@ import type GenericResponse from "@/api/router/GenericResponse";
 import type StageIndexResponse from "./responses/StageIndexResponse";
 import type StageGetResponse from "./responses/StageGetResponse";
 import StageStoreRequest from "./requests/StageStoreRequest";
+import type StageDataPerPipelineResponse from "./responses/StageDataPerPipelineResponse";
 
 export default class Stages {
     public async index(pipelineId: number): Promise<StageIndexResponse> {
         const data = await (new Network).handle(routes.stages.index(pipelineId));
         const cast = data as StageIndexResponse;
+        return cast;
+    }
+
+    public async getIdsPerPipeline(): Promise<StageDataPerPipelineResponse> {
+        const data = await (new Network).handle(routes.stages.getIdsPerPipeline());
+        const cast = data as StageDataPerPipelineResponse;
         return cast;
     }
 

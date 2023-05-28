@@ -25,6 +25,14 @@ export default class Network {
         return this;
     }
 
+    public setRawData(data: Object): Network {
+        this.data = {
+            ...this.data,
+            ...data,
+        }
+        return this;
+    }
+
     public applyRequests(requests: ApiRequest[]): Network {
         requests.forEach(request => this.setData(request));
         return this;

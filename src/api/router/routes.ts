@@ -14,6 +14,7 @@ import type PagedRequest from "./PagedRequest"
 import DealsForClientResponse from "../deals/responses/DealsForClientResponse"
 import PipelineAllResponse from "../pipelines/responses/PipelineAllResponse"
 import { HttpMethod } from "./Network"
+import StageDataPerPipelineResponse from "../stages/responses/StageDataPerPipelineResponse"
 
 /**
  * This file defines back-end API routes to be used by the Network object
@@ -29,6 +30,7 @@ export default {
     },
 
     deals: {
+        updateStage: (id: number) => (new ApiRoute("/api/deals/update-stage/{id}", HttpMethod.PUT, new GenericResponse)).param('id', id),
         getForClient: (clientId: number) => (new ApiRoute("/api/deals/for-client/{clientId}", HttpMethod.GET, new DealsForClientResponse)).param('clientId', clientId),
         store: () => (new ApiRoute("/api/deals", HttpMethod.POST, new GenericResponse)),
         delete: (id: number) => (new ApiRoute("/api/deals/{id}", HttpMethod.DELETE, new GenericResponse)).param('id', id),
@@ -45,6 +47,7 @@ export default {
 
     stages: {
         index: (pipelineId: number) => (new ApiRoute("/api/stages/{pipeline_id}", HttpMethod.GET, new StageIndexResponse).param("pipeline_id", pipelineId)),
+        getIdsPerPipeline: () => (new ApiRoute("/api/stages/get-ids-per-pipeline", HttpMethod.GET, new StageDataPerPipelineResponse)),
         get: (id: number) => (new ApiRoute("/api/stages/get/{id}", HttpMethod.GET, new StageGetResponse).param("id", id)),
         update: (id: number) => (new ApiRoute("/api/stages/{id}", HttpMethod.PUT, new GenericResponse)).param('id', id),
         delete: (id: number) => (new ApiRoute("/api/stages/{id}", HttpMethod.DELETE, new GenericResponse)).param('id', id),

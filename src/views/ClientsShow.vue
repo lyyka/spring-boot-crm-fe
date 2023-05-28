@@ -8,7 +8,6 @@ import DashboardLayout from '@/components/layouts/DashboardLayout.vue';
 import Load from '@/components/layouts/Load.vue';
 import Input from '@/components/ui/Input.vue';
 import Select from '@/components/ui/Select.vue';
-import Textarea from '@/components/ui/Textarea.vue';
 import Card from '@/components/ui/Card.vue';
 import Button from '@/components/ui/Button.vue';
 import { onMounted, reactive, ref } from 'vue';
@@ -33,7 +32,6 @@ import type Pipeline from '@/api/pipelines/dto/Pipeline';
 import Pipelines from '@/api/pipelines/pipelines';
 import type Stage from '@/api/stages/dto/Stage';
 import Stages from '@/api/stages/stages';
-import type DealProgressBarVue from '@/components/app/DealProgressBar.vue';
 
 const route = useRoute();
 const toaster = useToast();
@@ -44,12 +42,14 @@ const state: {
     dealStoreRequest: DealStoreRequest,
     pipelines: Pipeline[],
     stagesForSelectedPipeline: Stage[],
+    stageIdsPerPipeline: any,
 } = reactive({
     client: null,
     deals: [],
     dealStoreRequest: new DealStoreRequest(),
     pipelines: [],
     stagesForSelectedPipeline: [],
+    stageIdsPerPipeline: [],
 });
 
 const modal = ref();
@@ -62,12 +62,20 @@ onMounted(async () => {
 
             if (state.client) {
                 state.dealStoreRequest.clientId = state.client.getId();
+
                 loadDeals();
+
                 (new Pipelines).all()
                     .then(r => {
                         state.pipelines = r.getData();
                     })
                     .catch(_e => toaster.error("Failed loading pipelines"));
+
+                (new Stages).getIdsPerPipeline()
+                    .then(r => {
+                        state.stageIdsPerPipeline = r.getData();
+                    })
+                    .catch(_e => toaster.error("Failed loading stage ids per pipeline"))
             }
         })
         .catch(_e => toaster.error("Failed loading the user"));
@@ -175,8 +183,8 @@ const loadStagesForPipeline = async (pipelineId: number) => {
                         </TableCell>
 
                         <TableCell>
-                            <!-- <DealProgressBar :deal="deal" /> -->
-                            <strong>{{ deal.getPipelineName() }}</strong> / {{ deal.getStageName() }}
+                            <DealProgressBar :deal="deal" :stages="state.stageIdsPerPipeline" />
+                            <!-- <strong>{{ deal.getPipelineName() }}</strong> / {{ deal.getStageName() }} -->
                         </TableCell>
 
                         <TableCell>
