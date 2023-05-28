@@ -4,7 +4,6 @@ import { IDealStatus } from "./IDealStatus";
 interface IDeal {
     id: number,
     name: string,
-    notes: string,
     dealStatus: IDealStatus,
     stageId: number,
     stageName: string,
@@ -32,8 +31,8 @@ export default class Deal {
         return this.data.dealStatus;
     }
 
-    public getNotes(): string {
-        return this.data.notes;
+    public getStageId(): number {
+        return this.data.stageId;
     }
 
     public getStageName(): string {

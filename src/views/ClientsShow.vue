@@ -15,6 +15,7 @@ import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
 import ClientStoreRequest from '@/api/clients/requests/ClientStoreRequest';
+import DealProgressBar from '@/components/app/DealProgressBar.vue';
 import Modal from '@/components/ui/Modal.vue';
 import Phone from '@/components/icons/Phone.vue';
 import Email from '@/components/icons/Email.vue';
@@ -32,6 +33,7 @@ import type Pipeline from '@/api/pipelines/dto/Pipeline';
 import Pipelines from '@/api/pipelines/pipelines';
 import type Stage from '@/api/stages/dto/Stage';
 import Stages from '@/api/stages/stages';
+import type DealProgressBarVue from '@/components/app/DealProgressBar.vue';
 
 const route = useRoute();
 const toaster = useToast();
@@ -41,13 +43,13 @@ const state: {
     deals: Deal[],
     dealStoreRequest: DealStoreRequest,
     pipelines: Pipeline[],
-    stages: Stage[],
+    stagesForSelectedPipeline: Stage[],
 } = reactive({
     client: null,
     deals: [],
     dealStoreRequest: new DealStoreRequest(),
     pipelines: [],
-    stages: [],
+    stagesForSelectedPipeline: [],
 });
 
 const modal = ref();
@@ -114,7 +116,7 @@ const dealDeleteHandle = async (dealId: number) => {
 const loadStagesForPipeline = async (pipelineId: number) => {
     (new Stages).index(pipelineId)
         .then(r => {
-            state.stages = r.getData();
+            state.stagesForSelectedPipeline = r.getData();
         })
         .catch(_e => toaster.error(`Failed loading stages for pipeline ${pipelineId}`));
 }
@@ -173,8 +175,8 @@ const loadStagesForPipeline = async (pipelineId: number) => {
                         </TableCell>
 
                         <TableCell>
+                            <!-- <DealProgressBar :deal="deal" /> -->
                             <strong>{{ deal.getPipelineName() }}</strong> / {{ deal.getStageName() }}
-
                         </TableCell>
 
                         <TableCell>
@@ -206,10 +208,9 @@ const loadStagesForPipeline = async (pipelineId: number) => {
             <Select :options="state.pipelines.map(p => { return { label: p.getName(), value: String(p.getId()) } })"
                 @update:model-value="loadStagesForPipeline($event)" label="* Pipeline" />
 
-            <Select :options="state.stages.map(s => { return { label: s.getName(), value: String(s.getId()) } })"
+            <Select
+                :options="state.stagesForSelectedPipeline.map(s => { return { label: s.getName(), value: String(s.getId()) } })"
                 v-model="state.dealStoreRequest.stageId" label="* Stage" />
-
-            <Textarea v-model="state.dealStoreRequest.notes" label="Notes" />
 
             <Button @click="saveDealHandle">Save</Button>
         </form>

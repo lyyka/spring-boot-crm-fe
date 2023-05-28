@@ -6,7 +6,6 @@ export default class DealStoreRequest implements ApiRequest {
     public stageId: string | null = null;
     public name: string | null = null;
     public dealStatus: IDealStatus | null = null;
-    public notes: string | null = null;
 
     getData(): Object {
         return {
@@ -14,7 +13,6 @@ export default class DealStoreRequest implements ApiRequest {
             stageId: this.stageId,
             name: this.name,
             dealStatus: this.dealStatus,
-            notes: this.notes,
         };
     }
 }
