@@ -4,14 +4,13 @@ import routes from "@/api/router/routes";
 import type GenericResponse from "@/api/router/GenericResponse";
 import type ClientGetResponse from "@/api/clients/responses/ClientGetResponse";
 import type ClientStoreRequest from "@/api/clients/requests/ClientStoreRequest";
-import type PagedRequest from "@/api/router/PagedRequest";
 import type ApiRequest from "../router/ApiRequest";
 
 export default class Clients {
     public async index(...requests: ApiRequest[]): Promise<ClientIndexResponse> {
-        const network = new Network();
-        requests.forEach(request => network.setData(request))
-        const data = await network.handle(routes.clients.index());
+        const data = await (new Network())
+            .applyRequests(requests)
+            .handle(routes.clients.index());
         const cast = data as ClientIndexResponse;
         return cast;
     }

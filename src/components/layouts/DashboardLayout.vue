@@ -7,6 +7,7 @@ import SidebarLink from '@/components/ui/SidebarLink.vue';
 import SidebarItem from '@/components/ui/SidebarItem.vue';
 import SidebarTitle from '@/components/ui/SidebarTitle.vue';
 import { onBeforeUpdate, onMounted, onUpdated, reactive } from 'vue';
+import { computed } from '@vue/reactivity';
 
 export interface CrumbRoute {
     name: string, params?: any
@@ -57,17 +58,29 @@ const logoutHandle = () => {
     (new Auth).logout();
     router.push({ name: 'auth.login' })
 }
+
+const plainUsername = computed(() => Auth.getPlainUsername())
+const encryptedUsername = computed(() => Auth.getEncryptedUsername())
+
 </script>
 <template>
-    <div class="bg-primary py-2 px-4 flex items-center">
-        <p class="text-white">CRM</p>
-        <div v-for="crumb in state.crumbs" class="flex items-center ml-2">
-            <p class="text-white mr-2">/</p>
-            <RouterLink class="text-white hover:text-secondary" v-if="crumb.route"
-                :to="{ name: crumb.route.name, params: crumb.route.params }">
-                {{ crumb.label }}
-            </RouterLink>
-            <p class="text-slate-300" v-else>{{ crumb.label }}</p>
+    <div class="bg-primary py-2 px-4 flex justify-between items-center">
+        <div class="flex items-center">
+            <p class="text-white">CRM</p>
+            <div v-for="crumb in state.crumbs" class="flex items-center ml-2">
+                <p class="text-white mr-2">/</p>
+                <RouterLink class="text-white hover:text-secondary" v-if="crumb.route"
+                    :to="{ name: crumb.route.name, params: crumb.route.params }">
+                    {{ crumb.label }}
+                </RouterLink>
+                <p class="text-slate-300" v-else>{{ crumb.label }}</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <img style="width: 24px; height: 24px;" alt="Avatar"
+                :src="`https://source.boringavatars.com/beam/120/${encryptedUsername}?colors=cbd5e1,5b21b6,c4b5fd,a78bfa,7c3aed`" />
+            <p class="text-white">{{ plainUsername }}</p>
         </div>
     </div>
     <div class="grid grid-cols-5 grid-rows-1 h-full">

@@ -25,6 +25,11 @@ export default class Network {
         return this;
     }
 
+    public applyRequests(requests: ApiRequest[]): Network {
+        requests.forEach(request => this.setData(request));
+        return this;
+    }
+
     public async handle(route: ApiRoute): Promise<ApiResponse> {
         const request = {
             method: route.getMethod(),
