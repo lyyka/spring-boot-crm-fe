@@ -183,8 +183,8 @@ const loadStagesForPipeline = async (pipelineId: number) => {
                         </TableCell>
 
                         <TableCell>
+                            <p class="mb-1 text-sm">{{ deal.getPipelineName() }}</p>
                             <DealProgressBar :deal="deal" :stages="state.stageIdsPerPipeline" />
-                            <!-- <strong>{{ deal.getPipelineName() }}</strong> / {{ deal.getStageName() }} -->
                         </TableCell>
 
                         <TableCell>

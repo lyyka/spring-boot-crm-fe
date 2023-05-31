@@ -25,22 +25,18 @@ export default class Stages {
         return cast;
     }
 
-    // public async store(name: string): Promise<PipelineStoreResponse> {
-    //     const data = await (new Network)
-    //         .setData(
-    //             new PipelineStoreRequest(name)
-    //         )
-    //         .handle(routes.pipelines.store());
-
-    //     const cast = data as PipelineStoreResponse;
-    //     return Promise.resolve(cast);
-    // }
-
-    public async update(id: number, name: string): Promise<GenericResponse> {
+    public async store(request: StageStoreRequest): Promise<GenericResponse> {
         const data = await (new Network)
-            .setData(
-                new StageStoreRequest(name)
-            )
+            .setData(request)
+            .handle(routes.stages.store());
+
+        const cast = data as GenericResponse;
+        return Promise.resolve(cast);
+    }
+
+    public async update(id: number, request: StageStoreRequest): Promise<GenericResponse> {
+        const data = await (new Network)
+            .setData(request)
             .handle(routes.stages.update(id));
 
         const cast = data as GenericResponse;

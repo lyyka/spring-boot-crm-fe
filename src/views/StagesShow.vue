@@ -9,6 +9,7 @@ import Input from '@/components/ui/Input.vue';
 import Button from '@/components/ui/Button.vue';
 import type Pipeline from '@/api/pipelines/dto/Pipeline';
 import Load from '@/components/layouts/Load.vue';
+import StageStoreRequest from "@/api/stages/requests/StageStoreRequest";
 
 const route = useRoute();
 const toaster = useToast();
@@ -33,7 +34,7 @@ onMounted(async () => {
 const updateHandle = (id: number) => {
     if (state.stage) {
         (new Stages)
-            .update(id, state.stage?.getName())
+            .update(id, (new StageStoreRequest).setName(state.stage?.getName()))
             .then(r => toaster.success("Stage updated"))
             .catch(e => toaster.error("Error!"));
     }

@@ -49,6 +49,7 @@ export default {
         index: (pipelineId: number) => (new ApiRoute("/api/stages/{pipeline_id}", HttpMethod.GET, new StageIndexResponse).param("pipeline_id", pipelineId)),
         getIdsPerPipeline: () => (new ApiRoute("/api/stages/get-ids-per-pipeline", HttpMethod.GET, new StageDataPerPipelineResponse)),
         get: (id: number) => (new ApiRoute("/api/stages/get/{id}", HttpMethod.GET, new StageGetResponse).param("id", id)),
+        store: () => (new ApiRoute("/api/stages", HttpMethod.POST, new GenericResponse)),
         update: (id: number) => (new ApiRoute("/api/stages/{id}", HttpMethod.PUT, new GenericResponse)).param('id', id),
         delete: (id: number) => (new ApiRoute("/api/stages/{id}", HttpMethod.DELETE, new GenericResponse)).param('id', id),
     },

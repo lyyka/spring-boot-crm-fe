@@ -13,27 +13,33 @@ import Pipelines from '@/api/pipelines/pipelines';
 import Stages from '@/api/stages/stages';
 import DashboardLayout from '@/components/layouts/DashboardLayout.vue';
 import Load from '@/components/layouts/Load.vue';
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
 import type Stage from '@/api/stages/dto/Stage';
+import StageStoreRequest from "@/api/stages/requests/StageStoreRequest";
+import Modal from '@/components/ui/Modal.vue';
 
 const route = useRoute();
 const toaster = useToast();
 
 const state: {
     pipeline: Pipeline | null,
-    stages: Stage[]
+    stages: Stage[],
+    stageStoreRequest: StageStoreRequest,
 } = reactive({
     pipeline: null,
-    stages: []
+    stages: [],
+    stageStoreRequest: new StageStoreRequest(),
 });
+
+const stageModal = ref();
 
 const loadStages = () => {
     if (state.pipeline) {
         (new Stages).index(state.pipeline.getId())
             .then(r => state.stages = r.getData())
-            .catch(e => toaster.error("Error loading stages for this pipeline"));
+            .catch(_e => toaster.error("Error loading stages for this pipeline"));
     }
 }
 
@@ -42,25 +48,41 @@ onMounted(async () => {
         .then(r => {
             state.pipeline = r.getPipeline();
             loadStages();
-        }).catch(e => toaster.error("Failed loading the pipeline"));
+        }).catch(_e => toaster.error("Failed loading the pipeline"));
 });
 
 const updateHandle = (id: number) => {
     if (state.pipeline) {
         (new Pipelines)
             .update(id, state.pipeline?.getName())
-            .then(r => toaster.success("Pipeline updated"))
-            .catch(e => toaster.error("Error!"));
+            .then(_r => toaster.success("Pipeline updated"))
+            .catch(_e => toaster.error("Error!"));
+    }
+}
+
+const saveStageHandle = () => {
+    if (state.pipeline) {
+        state.stageStoreRequest.pipelineId = state.pipeline.getId();
+        (new Stages).store(state.stageStoreRequest)
+            .then(_r => {
+                state.stageStoreRequest = new StageStoreRequest();
+                toaster.success("Stage created");
+                stageModal.value.close();
+                loadStages();
+            })
+            .catch(_e => {
+                toaster.error("Error!");
+            })
     }
 }
 
 const deleteStageHandle = (id: number) => {
     (new Stages).delete(id)
-        .then(r => {
+        .then(_r => {
             toaster.success("Stage deleted");
             loadStages();
         })
-        .catch(e => toaster.error("Error!"));
+        .catch(_e => toaster.error("Error!"));
 }
 </script>
 
@@ -75,9 +97,12 @@ const deleteStageHandle = (id: number) => {
                     @click="state.pipeline ? updateHandle(state.pipeline.getId()) : () => { }">Update</Button>
             </form>
 
-            <h3 class="text-primary pb-2 border-b border-slate-200 text-h3 mb-4 mt-4">
-                Stages
-            </h3>
+            <div class="flex justify-between items-center border-b border-slate-200 my-4 pb-2">
+                <h3 class="text-primary text-h3">
+                    Stages
+                </h3>
+                <Button @click="() => { stageModal.open() }">+ New</Button>
+            </div>
             <Table>
                 <TableHead>
                     <TableHeadCell>Name</TableHeadCell>
@@ -101,4 +126,11 @@ const deleteStageHandle = (id: number) => {
             </Table>
         </Load>
     </DashboardLayout>
+
+    <Modal ref="stageModal">
+        <form>
+            <Input v-model="state.stageStoreRequest.name" label="Name" type="text" />
+            <Button @click="saveStageHandle">Save</Button>
+        </form>
+    </Modal>
 </template>

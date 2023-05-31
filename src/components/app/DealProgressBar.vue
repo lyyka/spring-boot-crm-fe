@@ -47,7 +47,7 @@ const updateStage = (stageId: number) => {
         <div v-for="stage in stages[deal.getPipelineId()]" @click="updateStage(stage.id)"
             class="w-full h-6 text-center cursor-pointer border-white border-r-2"
             :class="deal.getStageId() >= stage.id ? dealStatusClass : `${dealStatusClass} opacity-50`">
-            {{ stage.name }}
+            <span class="text-sm">{{ stage.name }}</span>
         </div>
     </div>
 </template>
