@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import Trash from '@/components/icons/Trash.vue';
+import DraggableIndicator from '@/components/icons/DraggableIndicator.vue';
 import type Pipeline from '@/api/pipelines/dto/Pipeline';
 import Table from '@/components/ui/Table.vue';
 import TableHead from '@/components/ui/TableHead.vue';
 import TableHeadCell from '@/components/ui/TableHeadCell.vue';
-import TableBody from '@/components/ui/TableBody.vue';
 import TableRow from '@/components/ui/TableRow.vue';
 import TableCell from '@/components/ui/TableCell.vue';
 import Input from '@/components/ui/Input.vue';
@@ -117,16 +117,19 @@ const stageReorderHandle = (event: any) => {
                 <TableHead>
                     <TableHeadCell>Name</TableHeadCell>
                 </TableHead>
-                <draggable v-model="state.stages" group="people" tag="TableBody" item-key="data.id"
+                <draggable v-model="state.stages" group="people" ghost-class="opacity-30" tag="TableBody" item-key="data.id"
                     @end="stageReorderHandle">
                     <template #item="{ element }">
-                        <TableRow>
+                        <TableRow class="hover:cursor-grab">
                             <TableCell>
                                 <div class="flex justify-between">
-                                    <RouterLink class="hover:text-secondary"
-                                        :to="{ name: 'crm.stages.show', params: { id: element.getId() } }">
-                                        {{ element.getName() }}
-                                    </RouterLink>
+                                    <div class="flex items-center">
+                                        <DraggableIndicator class="mr-1" />
+                                        <RouterLink class="hover:text-secondary"
+                                            :to="{ name: 'crm.stages.show', params: { id: element.getId() } }">
+                                            {{ element.getName() }}
+                                        </RouterLink>
+                                    </div>
 
                                     <button class="flex items-center" @click="deleteStageHandle(element.getId())">
                                         <Trash></Trash>
