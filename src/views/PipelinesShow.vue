@@ -19,6 +19,7 @@ import { useToast } from 'vue-toast-notification';
 import type Stage from '@/api/stages/dto/Stage';
 import StageStoreRequest from "@/api/stages/requests/StageStoreRequest";
 import Modal from '@/components/ui/Modal.vue';
+import draggable from 'vuedraggable';
 
 const route = useRoute();
 const toaster = useToast();
@@ -84,6 +85,15 @@ const deleteStageHandle = (id: number) => {
         })
         .catch(_e => toaster.error("Error!"));
 }
+
+const stageReorderHandle = (event: any) => {
+    const stageToUpdate: Stage = state.stages[event.newIndex];
+    (new Stages).updateOrder(stageToUpdate.getId(), event.newIndex + 1)
+        .then(_r => {
+            toaster.success("Order updated!");
+        })
+        .catch(_e => toaster.error("Failed updating the order"));
+}
 </script>
 
 <template>
@@ -107,22 +117,25 @@ const deleteStageHandle = (id: number) => {
                 <TableHead>
                     <TableHeadCell>Name</TableHeadCell>
                 </TableHead>
-                <TableBody>
-                    <TableRow v-for="stage in state.stages" :key="stage.getId()">
-                        <TableCell>
-                            <div class="flex justify-between">
-                                <RouterLink class="hover:text-secondary"
-                                    :to="{ name: 'crm.stages.show', params: { id: stage.getId() } }">
-                                    {{ stage.getName() }}
-                                </RouterLink>
+                <draggable v-model="state.stages" group="people" tag="TableBody" item-key="data.id"
+                    @end="stageReorderHandle">
+                    <template #item="{ element }">
+                        <TableRow>
+                            <TableCell>
+                                <div class="flex justify-between">
+                                    <RouterLink class="hover:text-secondary"
+                                        :to="{ name: 'crm.stages.show', params: { id: element.getId() } }">
+                                        {{ element.getName() }}
+                                    </RouterLink>
 
-                                <button class="flex items-center" @click="deleteStageHandle(stage.getId())">
-                                    <Trash></Trash>
-                                </button>
-                            </div>
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
+                                    <button class="flex items-center" @click="deleteStageHandle(element.getId())">
+                                        <Trash></Trash>
+                                    </button>
+                                </div>
+                            </TableCell>
+                        </TableRow>
+                    </template>
+                </draggable>
             </Table>
         </Load>
     </DashboardLayout>

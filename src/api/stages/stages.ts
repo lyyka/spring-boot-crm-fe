@@ -34,6 +34,15 @@ export default class Stages {
         return Promise.resolve(cast);
     }
 
+    public async updateOrder(id: number, order: number): Promise<GenericResponse> {
+        const data = await (new Network)
+            .setRawData({ order })
+            .handle(routes.stages.updateOrder(id));
+
+        const cast = data as GenericResponse;
+        return Promise.resolve(cast);
+    }
+
     public async update(id: number, request: StageStoreRequest): Promise<GenericResponse> {
         const data = await (new Network)
             .setData(request)

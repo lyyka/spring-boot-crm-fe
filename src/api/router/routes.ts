@@ -51,6 +51,7 @@ export default {
         get: (id: number) => (new ApiRoute("/api/stages/get/{id}", HttpMethod.GET, new StageGetResponse).param("id", id)),
         store: () => (new ApiRoute("/api/stages", HttpMethod.POST, new GenericResponse)),
         update: (id: number) => (new ApiRoute("/api/stages/{id}", HttpMethod.PUT, new GenericResponse)).param('id', id),
+        updateOrder: (id: number) => (new ApiRoute("/api/stages/order/{id}", HttpMethod.PUT, new GenericResponse)).param('id', id),
         delete: (id: number) => (new ApiRoute("/api/stages/{id}", HttpMethod.DELETE, new GenericResponse)).param('id', id),
     },
 
