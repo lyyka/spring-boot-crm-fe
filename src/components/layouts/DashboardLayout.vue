@@ -8,6 +8,7 @@ import SidebarItem from '@/components/ui/SidebarItem.vue';
 import SidebarTitle from '@/components/ui/SidebarTitle.vue';
 import { onBeforeUpdate, onMounted, onUpdated, reactive } from 'vue';
 import { computed } from '@vue/reactivity';
+import { RoleName } from '@/api/auth/RoleName';
 
 export interface CrumbRoute {
     name: string, params?: any
@@ -35,6 +36,8 @@ const state: {
     crumbs: [],
     autoCrumbDone: false,
 });
+
+const auth = new Auth;
 
 const autoCrumb = () => {
     if (!state.autoCrumbDone) {
@@ -92,16 +95,19 @@ const encryptedUsername = computed(() => Auth.getEncryptedUsername())
             <SidebarLink :active="route.name?.toString().startsWith('crm.clients')" :route="{ name: 'crm.clients.index' }">
                 Clients
             </SidebarLink>
-            <Divider />
-            <SidebarTitle>Settings</SidebarTitle>
-            <SidebarLink
-                :active="route.name?.toString().startsWith('crm.pipelines') || route.name?.toString().startsWith('crm.stages')"
-                :route="{ name: 'crm.pipelines.index' }">
-                Pipelines
-            </SidebarLink>
-            <SidebarLink :active="route.name?.toString().startsWith('crm.users')" :route="{ name: 'crm.users.index' }">
-                Users
-            </SidebarLink>
+            <div v-if="auth.hasAnyAuthority([RoleName.ADMIN_VIEW_PIPELINE, RoleName.ADMIN_VIEW_USER])">
+                <Divider />
+                <SidebarTitle>Settings</SidebarTitle>
+                <SidebarLink v-if="auth.hasAnyAuthority([RoleName.ADMIN_VIEW_PIPELINE])"
+                    :active="route.name?.toString().startsWith('crm.pipelines') || route.name?.toString().startsWith('crm.stages')"
+                    :route="{ name: 'crm.pipelines.index' }">
+                    Pipelines
+                </SidebarLink>
+                <SidebarLink v-if="auth.hasAnyAuthority([RoleName.ADMIN_VIEW_USER])"
+                    :active="route.name?.toString().startsWith('crm.users')" :route="{ name: 'crm.users.index' }">
+                    Users
+                </SidebarLink>
+            </div>
             <Divider />
             <SidebarItem @click="logoutHandle">
                 <div class="flex items-center gap-2">

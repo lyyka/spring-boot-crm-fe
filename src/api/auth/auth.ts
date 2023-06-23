@@ -15,11 +15,13 @@ export default class Auth {
             const token = cast.getToken();
             const plainUsername = cast.getPlainUsername();
             const encryptedUsername = cast.getEncryptedUsername();
+            const authoritiesList = cast.getAuthorities();
 
-            if (token && plainUsername && encryptedUsername) {
+            if (token && plainUsername && encryptedUsername && authoritiesList) {
                 localStorage.setItem('access_token', token)
                 localStorage.setItem('plain_username', plainUsername)
                 localStorage.setItem('encrypted_username', encryptedUsername)
+                localStorage.setItem('authorities', JSON.stringify(authoritiesList))
                 return Promise.resolve(true);
             }
 
@@ -27,6 +29,26 @@ export default class Auth {
         } catch (e) {
             return Promise.reject(e);
         }
+    }
+
+    public getAuthorities(): string[] {
+        const authorities = localStorage.getItem('authorities');
+        if (!authorities) {
+            return [];
+        }
+
+        return Array.from(JSON.parse(authorities));
+    }
+
+    public hasAnyAuthority(authoritiesToCheck: string[]): boolean {
+        const authoritiesList = this.getAuthorities();
+        let result = false;
+
+        for (let i = 0; i < authoritiesToCheck.length && !result; i++) {
+            result = authoritiesList.includes(authoritiesToCheck[i]);
+        }
+
+        return result;
     }
 
     public logout(): void {

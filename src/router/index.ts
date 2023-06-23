@@ -1,3 +1,4 @@
+import { RoleName } from '@/api/auth/RoleName';
 import Auth from '@/api/auth/auth'
 import { createRouter, createWebHistory, type RouteLocationNormalized } from 'vue-router'
 
@@ -38,43 +39,57 @@ const router = createRouter({
     {
       path: '/crm/users',
       name: 'crm.users.index',
-      beforeEnter: authMiddleware,
+      beforeEnter: [authMiddleware, () => {
+        return (new Auth).hasAnyAuthority([RoleName.ADMIN_VIEW_USER]);
+      }],
       component: () => import('@/views/UsersIndex.vue')
     },
     {
       path: '/crm/users/create',
       name: 'crm.users.create',
-      beforeEnter: authMiddleware,
+      beforeEnter: [authMiddleware, () => {
+        return (new Auth).hasAnyAuthority([RoleName.ADMIN_CREATE_USER]);
+      }],
       component: () => import('@/views/UsersCreate.vue')
     },
     {
       path: '/crm/users/:id',
       name: 'crm.users.show',
-      beforeEnter: authMiddleware,
+      beforeEnter: [authMiddleware, () => {
+        return (new Auth).hasAnyAuthority([RoleName.ADMIN_VIEW_USER]);
+      }],
       component: () => import('@/views/UsersShow.vue')
     },
     {
       path: '/crm/pipelines',
       name: 'crm.pipelines.index',
-      beforeEnter: authMiddleware,
+      beforeEnter: [authMiddleware, () => {
+        return (new Auth).hasAnyAuthority([RoleName.ADMIN_VIEW_PIPELINE]);
+      }],
       component: () => import('@/views/PipelinesIndex.vue')
     },
     {
       path: '/crm/pipelines/create',
       name: 'crm.pipelines.create',
-      beforeEnter: authMiddleware,
+      beforeEnter: [authMiddleware, () => {
+        return (new Auth).hasAnyAuthority([RoleName.ADMIN_CREATE_PIPELINE]);
+      }],
       component: () => import('@/views/PipelinesCreate.vue')
     },
     {
       path: '/crm/pipelines/:id',
       name: 'crm.pipelines.show',
-      beforeEnter: authMiddleware,
+      beforeEnter: [authMiddleware, () => {
+        return (new Auth).hasAnyAuthority([RoleName.ADMIN_VIEW_PIPELINE]);
+      }],
       component: () => import('@/views/PipelinesShow.vue')
     },
     {
       path: '/crm/stages/:id',
       name: 'crm.stages.show',
-      beforeEnter: authMiddleware,
+      beforeEnter: [authMiddleware, () => {
+        return (new Auth).hasAnyAuthority([RoleName.ADMIN_VIEW_STAGE]);
+      }],
       component: () => import('@/views/StagesShow.vue')
     },
     {
