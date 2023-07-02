@@ -89,9 +89,6 @@ const encryptedUsername = computed(() => Auth.getEncryptedUsername())
     <div class="grid grid-cols-5 grid-rows-1 h-full">
         <div class="col-span-1 border-r border-slate-200 px-2 py-4">
             <SidebarTitle>CRM</SidebarTitle>
-            <SidebarLink :active="route.name?.toString().startsWith('crm.dashboard')" :route="{ name: 'crm.dashboard' }">
-                Dashboard
-            </SidebarLink>
             <SidebarLink :active="route.name?.toString().startsWith('crm.clients')" :route="{ name: 'crm.clients.index' }">
                 Clients
             </SidebarLink>

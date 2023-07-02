@@ -31,12 +31,6 @@ const router = createRouter({
       component: () => import('@/views/Login.vue')
     },
     {
-      path: '/crm/dashboard',
-      name: 'crm.dashboard',
-      beforeEnter: authMiddleware,
-      component: () => import('@/views/Dashboard.vue')
-    },
-    {
       path: '/crm/users',
       name: 'crm.users.index',
       beforeEnter: [authMiddleware, () => {

@@ -17,7 +17,7 @@ const toaster = useToast();
 
 const loginHandle = async (e: Event) => {
     (new Auth).login(state.email, state.password)
-        .then(r => router.push({ name: 'crm.dashboard' }))
+        .then(r => router.push({ name: 'crm.clients.index' }))
         .catch(e => toaster.error("Invalid login"))
 }
 
